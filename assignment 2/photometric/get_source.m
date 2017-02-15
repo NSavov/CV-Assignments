@@ -6,6 +6,7 @@ if nargin == 0
     scale_factor = 1;
 end
 
+%the sqrt(3) is just to normalize
 scriptV = double([0 0 1;
  -1/sqrt(3), -1/sqrt(3), 1/sqrt(3);
  1/sqrt(3), -1/sqrt(3), 1/sqrt(3);
