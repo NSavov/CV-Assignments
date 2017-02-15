@@ -14,7 +14,7 @@ q(isnan(q)) = 0;
 
 % compute the surface height
 height_map = construct_surface( p, q, W, H );
-
+height_map
 % plot the results
 figure(1) 
 subplot(2, 2, 1);

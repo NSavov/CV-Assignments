@@ -19,18 +19,18 @@ albedo = zeros(W, H);
 normal = zeros(W, H, 3);
 p = zeros(W, H);
 q = zeros(W, H);
-for x=1:W
-    for y = 1:H 
+for x=1:H
+    for y = 1:W
         i = stack_images(x, y ,:);
-        scriptI = double(diag(squeeze(i).'));
-        scriptI
-        scriptV
-        scriptI*scriptV
-        g = dot(inv(dot(scriptI,scriptV)),dot(scriptI,i));
+        i = squeeze(i);
+        scriptI = double(diag(i.'));
+        g = pinv(scriptI*scriptV)*(scriptI*double(i));
         albedo(x,y) = norm(g);
-        normal(x,y) = g/albedo;
-        p(x,y) = normal(1)/normal(3);
-        q(x,y) = normal(2)/normal(3);
+        if norm(g) ~=0
+            normal(x,y, :) = g./norm(g);
+        end
+        p(x,y) = normal(x,y,1)/normal(x,y,3);
+        q(x,y) = normal(x,y,2)/normal(x,y,3);
     end
 end
 % TODO: Your code goes here
