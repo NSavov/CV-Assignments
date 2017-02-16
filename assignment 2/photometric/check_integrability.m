@@ -10,18 +10,8 @@ ph = size(p, 2);
 dpdy = zeros(size(p, 1), size(p, 2));
 dqdx = zeros(size(q, 1), size(q, 2));
 
-for x=1:ph
-    for y=2:pw-1
-        dpdy(x,y) = (p(x,y-1)-p(x,y+1))/2;
-        
-    end
-end
-        
-for x=2:ph-1
-    for y=1:pw
-        dqdx(x,y) = (q(x-1,y)-q(x+1,y))/2;
-    end
-end
+[dpdx, dpdy] = gradient(p);
+[dqdx, dqdy] = gradient(q);
 % TODO: Your code goes here
 % approximate derivate by neighbor difference
 

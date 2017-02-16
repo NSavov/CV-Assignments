@@ -21,16 +21,18 @@ p = zeros(W, H);
 q = zeros(W, H);
 for x=1:H
     for y = 1:W
-        i = stack_images(x, y ,:);
-        i = squeeze(i);
-        scriptI = double(diag(i.'));
-        g = pinv(scriptI*scriptV)*(scriptI*double(i));
-        albedo(x,y) = norm(g);
-        if norm(g) ~=0
-            normal(x,y, :) = g./norm(g);
+        i = stack_images(y, x ,:);
+        i = double(reshape(i, [5,1]));
+        scriptI = double(diag(i'));
+        g = pinv(scriptI*scriptV)*scriptI*i;
+        albedo(y,x) = norm(g);
+        
+        if norm(g)~=0
+            normal(y,x, :) = g/norm(g);
         end
-        p(x,y) = normal(x,y,1)/normal(x,y,3);
-        q(x,y) = normal(x,y,2)/normal(x,y,3);
+
+        p(y,x) = normal(y,x,1)/normal(y,x,3);
+        q(y,x) = normal(y,x,2)/normal(y,x,3);
     end
 end
 % TODO: Your code goes here
@@ -42,11 +44,5 @@ end
 %   normal at this point is g / |g|
 %   p at this point is N1 / N3
 %   q at this point is N2 / N3
-
-
-
-
-
-
 end
 

@@ -7,17 +7,23 @@ if nargin == 0
 end
 
 %the sqrt(3) is just to normalize
+
+
+
+
+
 scriptV = double([0 0 1;
- -1/sqrt(3), -1/sqrt(3), 1/sqrt(3);
- 1/sqrt(3), -1/sqrt(3), 1/sqrt(3);
- -1/sqrt(3), 1/sqrt(3), 1/sqrt(3);
- 1/sqrt(3), 1/sqrt(3), 1/sqrt(3);
+ -1, -1, 1;
+ 1, -1, 1;
+ -1, 1, 1;
+ 1, 1, 1;
  ]);
 
+for x=1:size(scriptV, 1)
+    scriptV(x, :) = scriptV(x, :)/norm(scriptV(x,:));
+end
 
 % TODO: define arbitrary direction to V
-
-
 
 % TODO: normalize V into scriptV
 
