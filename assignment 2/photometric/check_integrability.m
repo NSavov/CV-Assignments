@@ -5,19 +5,13 @@ function [ dpdy, dqdx ] = check_integrability( p, q )
 %   dpdy : second derivative dp / dy
 %   dqdx : second derviative dq / dx
 
-pw = size(p, 1);
-ph = size(p, 2);
-dpdy = zeros(size(p, 1), size(p, 2));
-dqdx = zeros(size(q, 1), size(q, 2));
-
+%just the derivative of each value in matrix p by columns and by rows
+%i.e. dpdx says how much each value of p grows wrt to the value on same row
+%but previous column
 [dpdx, dpdy] = gradient(p);
 [dqdx, dqdy] = gradient(q);
 % TODO: Your code goes here
 % approximate derivate by neighbor difference
-
-
-
-
 
 end
 

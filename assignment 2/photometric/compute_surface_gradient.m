@@ -19,19 +19,29 @@ albedo = zeros(W, H);
 normal = zeros(W, H, 3);
 p = zeros(W, H);
 q = zeros(W, H);
+%now go through each point (remember H is column dimension and W the rows)
 for x=1:H
     for y = 1:W
-        i = stack_images(y, x ,:);
-        i = double(reshape(i, [5,1]));
-        scriptI = double(diag(i'));
-        g = pinv(scriptI*scriptV)*scriptI*i;
-        albedo(y,x) = norm(g);
+        i = stack_images(y, x ,:); %i is a vector with 5 versions of the same pixel
+        i = double(reshape(i, [5,1])); %i preserves extra dimensions from stack_images. Just remove them
+        scriptI = double(diag(i')); %a matrix with i in the diagonal and 0s everywhere else
+        g = pinv(scriptI*scriptV)*scriptI*i; % Ii = IVg(y,x). pseudo-inverse lets us solve for g even if IV is not square
+        %note g(y,x) is a vector normal to the surface and with length
+        %given by the albedo. Since it is a function of I and V, it keeps
+        %all information regarding albedo and light sources
+        albedo(y,x) = norm(g); %by definition g = albedo(y,x)N(y,x). Since N is normal, the norm of g is given solely by albedo
         
         if norm(g)~=0
-            normal(y,x, :) = g/norm(g);
+            normal(y,x, :) = g/norm(g); %then if albedo is not 0, the normal vector at (y, x) is just normalized g
+            %if the norm of g was 0, then normal(y,x) remains 0 as it was
+            %by default
+        else
+            normal(y,x, :) = [0, 0, 1];
         end
-
+        %finally, df/dx is just this ration: for this point (y,x), how much
+        %does x changes as z changes, this equals df/dy
         p(y,x) = normal(y,x,1)/normal(y,x,3);
+        %how much does y changes as z changes, this equals df/dx
         q(y,x) = normal(y,x,2)/normal(y,x,3);
     end
 end

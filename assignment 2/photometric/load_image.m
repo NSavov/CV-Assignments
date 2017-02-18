@@ -20,6 +20,8 @@ for i = 2 : nfiles
     image_stack(:, :, i) = imread(fullfile(image_dir, files(i).name));
 end
 
+%here's where the whole mess starts: H should be the number of rows. But
+%who cares at this point? Plus, those are square pictures...
 W = size(image_stack, 1);
 H = size(image_stack, 2);
 
