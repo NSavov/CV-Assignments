@@ -17,7 +17,7 @@ function imOut = my_HistMatching(input , reference )
     imshow(reference);
     
     subplot(3, 2, 5);
-    modified = histeq(reference, i_frequencies);
+    modified = hist_eq(input, reference);
     [m_frequencies, xm] = imhist(modified);
     plot(xm, m_frequencies);
     title('modified')
@@ -26,52 +26,21 @@ function imOut = my_HistMatching(input , reference )
 end
 
 function equalized = hist_eq(input, reference)
-    %get reference histogram
-    [hgram, ~] = imhist(reference);
-    m = length(hgram);
-    n=m;
+    map = zeros(256,1,'uint8');
+    hist1 = imhist(input);       
+    hist2 = imhist(reference);
     
-    %normalize hgram
-    hgram = hgram*(numel(input)/sum(hgram));
+    %compute cumulative distributions
+    c_inp = cumsum(hist1) / numel(input);
+    c_ref = cumsum(hist2) / numel(reference);
     
-    %compute cummulative distribution of input
-    nn = imhist(input,numel(hgram))';
-    cummulative = cumsum(nn);
-    
+    %compute the mapping function
+    for idx = 1 : 256
+        [~,ind] = min(abs(c_inp(idx) - c_ref));
         
-    cumd = cumsum(hgram);
-
-    % Create transformation to an intensity image by minimizing the error
-    % between desired and actual cumulative histogram.
-    tol = ones(m,1)*min([nn(1:n-1),0;0,nn(2:n)])/2;
-    err = (cumd(:)*ones(1,n)-ones(m,1)*cummulative(:)')+tol;
-    d = find(err < -numel(input)*sqrt(eps));
-    if ~isempty(d)
-       err(d) = numel(input)*ones(size(d));
+        %map to the corresponding to the index intensity
+        map(idx) = ind-1;
     end
-    [dum,T] = min(err); %#ok
-    T = (T-1)/(m-1);
-    equalized = grayxformmex(input, T);
 
-
-
-M = zeros(256,1,'uint8'); % Store mapping - Cast to uint8 to respect data type
-img1 = input;
-img2 = reference;
-    
-hist1 = imhist(img1);        % Compute histograms
-hist2 = imhist(img2);
-cdf1 = cumsum(hist1) / numel(img1);  %Compute CDFs
-cdf2 = cumsum(hist2) / numel(img2);
-
-% Compute the mapping
-for idx = 1 : 256
-    [~,ind] = min(abs(cdf1(idx) - cdf2));
-    M(idx) = ind-1;
-end
-
-%Now apply the mapping to get first image to make
-%the image look like the distribution of the second image
-equalized = M(double(img1)+1);
-
+    equalized = uint8(map(double(input)+1));
 end
