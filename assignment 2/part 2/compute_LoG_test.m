@@ -1,0 +1,6 @@
+subplot(131)
+imshow(compute_LoG(city_img, 1))
+subplot(132)
+imshow(compute_LoG(city_img, 2))
+subplot(133)
+imshow(compute_LoG(city_img, 3))

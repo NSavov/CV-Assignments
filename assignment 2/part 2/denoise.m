@@ -1,3 +1,4 @@
+%%testing with the built-in functions
 % function imOut = denoise(image, kernel_type, kernel_size)
 %     if strcmp(kernel_type, 'box')
 %         imOut = imboxfilt(image, kernel_size);
@@ -30,7 +31,6 @@ function imOut = denoise(image, kernel_type, kernel_size)
         end
     end
     
-    imshow(imOut)
 end
     
 function filterOut = box_filter(subM)
