@@ -1,4 +1,4 @@
-function imOut = my_HistMatching(input , reference )
+function imOut = myHistMatching(input , reference )
     %Get histValues for each channel
     [i_frequencies, xi] = imhist(input);
     [r_frequencies, xr] = imhist(reference);

@@ -1,5 +1,5 @@
 function imOut = gaussConv ( image , sigma_x , sigma_y , kernel_size )
-    H1 = double(gauss(sigma_x, kernel_size));
+    H1 = gauss(sigma_x, kernel_size);
     H2 = gauss(sigma_y, kernel_size);
     %imOut = imfilter(image, H1);
     %G = gauss2(3, 5);
