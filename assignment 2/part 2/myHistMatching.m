@@ -18,20 +18,21 @@ function imOut = myHistMatching(input , reference )
     
     subplot(3, 2, 5);
     modified = hist_eq(input, reference);
+    imOut = modified;
     [m_frequencies, xm] = imhist(modified);
     bar(xm, m_frequencies);
     title('modified')
     subplot(3, 2, 6);
     imshow(modified)
-    
-    figure();
-    subplot(1, 2, 1);
-    modified = hist_eq(input, reference);
-    [m_frequencies, xm] = imhist(modified);
-    bar(xm, m_frequencies);
-    title('modified')
-    subplot(1, 2, 2);
-    imshow(modified)
+%     
+%     figure();
+%     subplot(1, 2, 1);
+%     modified = hist_eq(input, reference);
+%     [m_frequencies, xm] = imhist(modified);
+%     bar(xm, m_frequencies);
+%     title('modified')
+%     subplot(1, 2, 2);
+%     imshow(modified)
 end
 
 function equalized = hist_eq(input, reference)
@@ -43,8 +44,17 @@ function equalized = hist_eq(input, reference)
     c_inp = cumsum(hist1) / numel(input);
     c_ref = cumsum(hist2) / numel(reference);
     
+%     figure()
+%     subplot(11)
+%     bar(c_inp)
+%     subplot(122)
+%     bar(c_ref)
+%     figure()
+    
     %compute the mapping function
     for idx = 1 : 256
+        %find the minimum difference between input and reference for the
+        %current intensity
         [~,ind] = min(abs(c_inp(idx) - c_ref));
         
         %map to the corresponding to the index intensity
