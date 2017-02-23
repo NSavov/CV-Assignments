@@ -5,13 +5,13 @@ function imOut = my_HistMatching(input , reference )
     
     %Plot them together in one plot
     subplot(3, 2, 1);
-    plot(xi, i_frequencies); %input histogram
+    bar(xi, i_frequencies); %input histogram
     title('input')
     subplot(3, 2, 2);
     imshow(input);
     
     subplot(3, 2, 3);
-    plot(xr, r_frequencies); %reference histogram
+    bar(xr, r_frequencies); %reference histogram
     title('reference')
     subplot(3, 2, 4);
     imshow(reference);
@@ -19,9 +19,18 @@ function imOut = my_HistMatching(input , reference )
     subplot(3, 2, 5);
     modified = hist_eq(input, reference);
     [m_frequencies, xm] = imhist(modified);
-    plot(xm, m_frequencies);
+    bar(xm, m_frequencies);
     title('modified')
     subplot(3, 2, 6);
+    imshow(modified)
+    
+    figure();
+    subplot(1, 2, 1);
+    modified = hist_eq(input, reference);
+    [m_frequencies, xm] = imhist(modified);
+    bar(xm, m_frequencies);
+    title('modified')
+    subplot(1, 2, 2);
     imshow(modified)
 end
 
