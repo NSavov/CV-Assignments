@@ -27,16 +27,4 @@ function [im_magnitude, im_direction] = compute_gradient(image)
     imshow(im_direction, [])
     title('Direction')
     
-%    %test using the built-in functions
-%     figure()
-%     [Gx, Gy] = imgradientxy(image, 'sobel');
-%     [im_magnitude, im_direction] = imgradient(Gx, Gy);
-%     subplot(221)
-%     imshow(Gx, [])
-%     subplot(222)
-%     imshow(Gy, [])
-%     subplot(223)
-%     imshow(uint8(im_magnitude), [])
-%     subplot(224)
-%     imshow(im_direction, [])
 end
