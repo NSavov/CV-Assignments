@@ -1,4 +1,13 @@
 function imOut = compute_LoG(image, LOG_type)
+% COMPUTE_LOG calculates the LoG (Laplacian convolved Gaussian) of a given
+% greyscale image with a given method out of 3 options
+%   image: image
+%   LOG_type: integer specifying the type of LoG to apply. Can be either of
+%   1 (which gets a gaussian-smoothed version of the image with sigma = 0.7
+%   and then applies a laplacian filter), 2 (to apply the log operator
+%   directly) or 3 to take the difference of a gaussian filter with sigma
+%   = 1 and another gaussian filter with sigma = 4
+%   imOut: the LoG filtered image
     switch LOG_type
         case 1
             %method 1
