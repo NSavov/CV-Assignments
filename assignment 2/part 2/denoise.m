@@ -8,6 +8,7 @@ function imOut = denoise(image, kernel_type, kernel_size)
 %   imOut: the denoised image
     k_rows = kernel_size(1);
     k_cols = kernel_size(2);
+    image = padarray(image, [(k_cols-1)/2, (k_rows-1)/2]);
     rows = size(image, 1);
     cols = size(image, 2);
     imOut = zeros([rows, cols], 'uint8');
@@ -26,6 +27,8 @@ function imOut = denoise(image, kernel_type, kernel_size)
             end
         end
     end
+    
+    imOut = imOut(((k_rows-1)/2):(size(imOut, 1)- ((k_rows-1)/2)), ((k_cols-1)/2):(size(imOut, 2)- ((k_cols-1)/2)));
     
 end
     

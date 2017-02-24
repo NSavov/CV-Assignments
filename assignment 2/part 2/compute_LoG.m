@@ -14,13 +14,13 @@ function imOut = compute_LoG(image, LOG_type)
             %first apply gaussian which smooths
             %then wit laplace sharpen the general features
             %we got edges!
-            blurred = imgaussfilt(image, 0.7);
+            blurred = imgaussfilt(image, 0.5);
             h = fspecial('laplacian');
             imOut = imfilter(blurred, h);
             
         case 2
             %method 2
-            h = fspecial('log');
+            h = fspecial('log', [3 3], 0.5);
             imOut = imfilter(image, h);
             
         case 3
