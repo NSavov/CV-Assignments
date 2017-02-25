@@ -8,19 +8,27 @@ function imOut = compute_LoG(image, LOG_type)
 %   directly) or 3 to take the difference of a gaussian filter with sigma
 %   = 1 and another gaussian filter with sigma = 4
 %   imOut: the LoG filtered image
+    image = im2double(image);
     switch LOG_type
         case 1
             %method 1
             %first apply gaussian which smooths
             %then wit laplace sharpen the general features
             %we got edges!
-            blurred = imgaussfilt(image, 0.5);
+            %blurred = imgaussfilt(image, 0.5, 'FilterSize',[3 3]);
+            g = fspecial('gaussian', [3 3], 0.5);
+            smooth = imfilter(image, g);
             h = fspecial('laplacian');
-            imOut = imfilter(blurred, h);
+            %imOut = imfilter(blurred, h);
+            imOut = imfilter(smooth, h);
             
         case 2
             %method 2
             h = fspecial('log', [3 3], 0.5);
+            g = fspecial('gaussian', [3 3], 0.5);
+            l = fspecial('laplacian');
+            log = imfilter(g, l);
+            %log = conv2(l, g, 'same');
             imOut = imfilter(image, h);
             
         case 3
