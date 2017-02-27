@@ -1,0 +1,9 @@
+denoise_test
+figure()
+myHistMatching_test
+figure()
+compute_gradient_test
+figure()
+unsharp_test
+figure()
+compute_LoG_test
