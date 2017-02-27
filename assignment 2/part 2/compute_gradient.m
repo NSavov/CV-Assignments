@@ -13,12 +13,12 @@ function [im_magnitude, im_direction] = compute_gradient(image)
     %changes over non totally vertical changes. The bigger the intensity
     %difference between upper and lower rows, the bigger the magnitude of
     %the gradient's y coordinate at this point
-    grad_y = [1 +2 +1; 0 0 0; -1 -2 -1];
+    grad_y = [1 2 1; 0 0 0; -1 -2 -1];
     grad_x = [-1 0 1; -2 0 2; -1 0 1];
     % Gx is the matrix with the x coordinates of the intensity change
     % gradient at each pixel
     Gx = conv2(image, grad_x);
-    Gy = conv2( image, grad_y);
+    Gy = conv2(image, -grad_y);
     
     % compute magnitude and direction of the gradients
     im_magnitude = sqrt(Gx.^2+Gy.^2);
