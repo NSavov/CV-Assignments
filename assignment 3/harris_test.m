@@ -1,7 +1,4 @@
-image = imread('image3.jpeg');
-%image =rgb2gray(image);
-[H, r, c] = harris(image, 3, 1000, 3, 2);
+image = imread('pingpong/0000.jpeg');
+
+[H, r, c] = harris(image, 3, 1000, 2, 1);
     
-
-
-%imshow(H, [])
