@@ -7,10 +7,14 @@ sphere_sizex = size(sphere1, 1);
 sphere_sizey = size(sphere1, 2);
 synth_sizex = size(synth1, 1);
 synth_sizey = size(synth1, 2);
-[sphere_Vx, sphere_Vy] = lucas_kanade(rgb2gray(sphere1), rgb2gray(sphere2), window_size);
+% we need to vertically flip (flipud) the image since it is vertically
+% flipped wrt to how the plotting funcitons show it. Plotting functions
+% have the origin at bottom left corner (normal in math) but image display
+% functions use top left
+[sphere_Vx, sphere_Vy] = lucas_kanade(flipud(rgb2gray(sphere1)), flipud(rgb2gray(sphere2)), window_size);
 [sphere_x, sphere_y] = meshgrid(0:window_size:(sphere_sizex-window_size), 0:window_size:(sphere_sizey-window_size));
 
-[synth_Vx, synth_Vy] = lucas_kanade(synth1, synth2, window_size);
+[synth_Vx, synth_Vy] = lucas_kanade(flipud(synth1), flipud(synth2), window_size);
 [synth_x, synth_y] = meshgrid(0:window_size:(synth_sizex-window_size), 0:window_size:(synth_sizey-window_size));
 
 subplot(231);
