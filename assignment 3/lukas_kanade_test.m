@@ -1,0 +1,10 @@
+sphere1 = imread('sphere1.ppm');
+sphere2 = imread('sphere2.ppm');
+synth1 = imread('synth1.pgm');
+synth2 = imread('synth2.pgm');
+window_size = 15;
+sizex = size(sphere1, 1);
+sizey = size(sphere1, 2);
+[Vx, Vy] = lucas_kanade(rgb2gray(sphere1), rgb2gray(sphere2), window_size);
+[x, y] = meshgrid(0:window_size:(sizex-window_size), 0:window_size:(sizey-window_size));
+quiver(x, y, Vx, Vy);
