@@ -61,19 +61,19 @@ function [H, r, c] = harris(image, n, threshold, sigmaD, sigmaP)
     [r,c] = find(H>0);
     
     %plots
-    subplot(131)
-    imshow(Ix,[])
-
-    subplot(132)
-    imshow(Iy,[])
-
+%     subplot(131)
+%     imshow(Ix,[])
+% 
+%     subplot(132)
+%     imshow(Iy,[])
+% 
+% %     subplot(133)
+% %     imshow(H, [])
+%     
 %     subplot(133)
-%     imshow(H, [])
-    
-    subplot(133)
-    imshow(original,[])
-    hold on
-    scatter(c, r, 'r.')
-    hold off
+%     imshow(original,[])
+%     hold on
+%     scatter(c, r, 'r.')
+%     hold off
     
 end

@@ -1,11 +1,12 @@
-sphere1 = imread('sphere1.ppm');
-sphere2 = imread('sphere2.ppm');
+sphere1 = imread('pingpong/0000.jpeg');%'sphere1.ppm');
+sphere2 = imread('pingpong/0001.jpeg');%'sphere2.ppm');
 %sphere1 = imread('pingpong/0001.jpeg');
 %sphere2 = imread('pingpong/0002.jpeg');
 synth1 = imread('synth1.pgm');
 synth2 = imread('synth2.pgm');
 window_size = 15;
 sphere_sizex = size(sphere1, 1);
+
 sphere_sizey = size(sphere1, 2);
 synth_sizex = size(synth1, 1);
 synth_sizey = size(synth1, 2);
