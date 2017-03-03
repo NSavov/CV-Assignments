@@ -4,10 +4,7 @@ function [Ix, Iy, H, r, c] = harris(image, n, threshold, sigmaD, sigmaP)
 %threshold - H threshold
 %sigmaD - derivative gaussian sigma
 %sigmaP - window gaussian sigma
-
-    %backup the original image for plotting
-    original = image(:, :, :);
-    
+ 
     half_window = (n-1)/2;
     
     %convert to grayscale if it is not
