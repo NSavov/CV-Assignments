@@ -15,7 +15,7 @@
     c = containers.Map;
 
 %     for i = 1:size(images, 3)
-%         [H, r_temp, c_temp] = harris(images(:,:,i), 3, 1000, 2, 1);
+%         [~, ~, H, r_temp, c_temp] = harris(images(:,:,i), 3, 1000, 2, 1);
 %         harris_images(:,:,i) = H;
 %         r(num2str(i)) = r_temp;
 %         c(num2str(i)) = c_temp;
