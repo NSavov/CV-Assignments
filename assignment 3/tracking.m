@@ -44,32 +44,16 @@
     
     size(Vxs_display)
     size(Vxs)
-%     half_window = (window_size - 1)/2;
-%     for i = 1:size(Vxs_display, 3)
-%         for row = 1:size(Vxs, 1)
-% %             size(Vxs_display_temp((row-1)*window_size+1:row*window_size,:,i))
-% %             size(padarray(Vxs(row,:,i), [half_window,0]))
-%             Vxs_display_temp((row-1)*window_size+1:row*window_size,:,i) = padarray(Vxs(row,:,i), [half_window,0]);
-%             Vys_display_temp((row-1)*window_size+1:row*window_size,:,i) = padarray(Vys(row,:,i), [half_window,0]);
-%         end
-%             
-%         for col = 1:size(Vxs_display_temp, 2)
-%             Vxs_display(:,(col-1)*window_size+1:row*window_size,:,i) = padarray(Vxs_display_temp(:,col,i), [0,half_window]);
-%             Vys_display(:,(col-1)*window_size+1:row*window_size,:,i) = padarray(Vys_display_temp(:,col,i), [0,half_window]);
-%         end
-%     end
-    
-    %    [r,c] = find(harris_images(:,:,1)>0);
     
     [mesh_x, mesh_y] = meshgrid(0:1:(im_size(2))-1, 0:1:(im_size(1))-1);
     figure()
-    for i = 1: size(images, 3)
+    for i = 1: size(images, 3)-1
         imshow(images(:,:,i),[])
         hold on
         scatter(c(num2str(i)), r(num2str(i)), 'r.')
 
         quiver(mesh_x, mesh_y, 10*Vxs_display(:,:,i), 10*Vys_display(:,:,i), 'b','AutoScale','off');
         hold off
-        pause(0.5)
+        pause(0.2)
     end
     

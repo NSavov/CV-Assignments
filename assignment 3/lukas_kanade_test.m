@@ -10,15 +10,12 @@ sphere_sizex = size(sphere1, 1);
 sphere_sizey = size(sphere1, 2);
 synth_sizex = size(synth1, 1);
 synth_sizey = size(synth1, 2);
-% we need to vertically flip (flipud) the image since it is vertically
-% flipped wrt to how the plotting funcitons show it. Plotting functions
-% have the origin at bottom left corner (normal in math) but image display
-% functions use top left
-[sphere_Vx, sphere_Vy] = lucas_kanade(flipud(rgb2gray(sphere1)), flipud(rgb2gray(sphere2)), window_size);
+[sphere_Vx, sphere_Vy] = lucas_kanade(rgb2gray(sphere1), rgb2gray(sphere2), window_size);
 [sphere_x, sphere_y] = meshgrid(0:window_size:(sphere_sizey-window_size), 0:window_size:(sphere_sizex-window_size));
 
-[synth_Vx, synth_Vy] = lucas_kanade(flipud(synth1), flipud(synth2), window_size);
+[synth_Vx, synth_Vy] = lucas_kanade(synth1, synth2, window_size);
 [synth_x, synth_y] = meshgrid(0:window_size:(synth_sizey-window_size), 0:window_size:(synth_sizex-window_size));
+figure()
 
 subplot(231);
 imshow(sphere1);
@@ -28,6 +25,7 @@ imshow(sphere2);
 title('Sphere 2');
 subplot(233);
 quiver(sphere_x, sphere_y, sphere_Vx, sphere_Vy);
+set(gca, 'YDir', 'reverse')
 title('Optical flow');
 subplot(234);
 imshow(synth1);
@@ -37,4 +35,6 @@ imshow(synth2);
 title('Synth 2');
 subplot(236);
 quiver(synth_x, synth_y, synth_Vx, synth_Vy);
+set(gca, 'YDir', 'reverse')
+hold off
 title('Optical flow');
