@@ -17,22 +17,29 @@ function [Ix, Iy, H, r, c] = harris(image, n, threshold, sigmaD, sigmaP)
     
     %calculate the x and y gradients
     f = fspecial('gaussian', [3 3], sigmaD);
-    [Gx,Gy] = gradient(f);
-    Ix = conv2(image, Gx, 'same');
+    [Gx,Gy] = gradient(f); % Gx is the partial derivative of a Gaussian kernel
+    %over the x axis. Therefore it is positive to the left (over negative x
+    %values, where the curve grows), gets to zero (at the mean, where the
+    %curve's slope reaches 0) and then negative over the positive x values
+    %(where the slope goes down). Gy will be the transpose of this for
+    %analogous reasons
+    Ix = conv2(image, Gx, 'same'); 
     Iy = conv2(image, Gy, 'same');
     
     %calculate the elements of the matrix to sum for each pixel
-    Ixx = Ix.*Ix;
+    Ixx = Ix.*Ix; % remember the definition of Q. We need all this combinations of Ix and Iy
     Iyy = Iy.*Iy;
     Ixy = Ix.*Iy;
-    gkernel = fspecial('gaussian', [3 3], sigmaP);
+    gkernel = fspecial('gaussian', [3 3], sigmaP); % the autocorrelation
+    % weights every pixel intensity with a gaussian distribution: that is,
+    % convolve the intensities with a gaussian kernel
     Sxx = conv2( Ixx, gkernel, 'same');
     Syy = conv2(Iyy, gkernel, 'same');
     Sxy = conv2(Ixy, gkernel,  'same');
 
     size_x = size(image, 1);
     size_y = size(image, 2);
-    H = zeros(size_x, size_y);
+    H = zeros(size_x, size_y); % this is called R on the slides
     
     %iterate over every pixel
     for x = half_window+1:size_x-half_window-1
@@ -53,16 +60,31 @@ function [Ix, Iy, H, r, c] = harris(image, n, threshold, sigmaD, sigmaP)
     
     %leave only the pixels with H values higher than the threshold
 %     H(H>0)
-    
-    fH = H(H>0);
-    maxDif = max(fH) - min(fH);
-%     fH = fH/maxDif;
-%     maxDif = abs(mean(fH) - max(fH));
-
-%     figure()
-    threshold = mean(fH)*5.5; %+ 0.01*maxDif;
-  
-    H(H<threshold) = 0;
-    %find indices of the remaining positive H values
-    [r,c] = find(H>0);
+    filter_window_size = 5;
+    c = [];
+    r = [];
+    for x = 1:filter_window_size:size_x - filter_window_size
+        for y = 1:filter_window_size:size_y - filter_window_size
+%             fH = H(H>0);
+%             maxDif = max(fH) - min(fH);
+%         %     fH = fH/maxDif;
+%         %     maxDif = abs(mean(fH) - max(fH));
+% 
+%         %     figure()
+%             threshold = mean(fH)*5.5; %+ 0.01*maxDif;
+% 
+%             H(H<threshold) = 0;
+%             %find indices of the remaining positive H values
+%             [r,c] = find(H>0);
+            if max(max(H(x:x+filter_window_size,y:y+filter_window_size))) > threshold
+                [values, indexes] = max(H(x:x+filter_window_size,y:y+filter_window_size));
+                [~, index_x] = max(values);
+                corner_y = indexes(index_x);
+                corner_y = corner_y + y - 1;
+                index_x = index_x + x - 1;
+                c = [c, corner_y];
+                r = [r, index_x];
+            end
+        end
+    end
 end
