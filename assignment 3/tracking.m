@@ -14,15 +14,15 @@
     r = containers.Map;
     c = containers.Map;
 
-%     for i = 1:size(images, 3)
-%         [~, ~, H, r_temp, c_temp] = harris(images(:,:,i), 3, 1000, 2, 1);
-%         harris_images(:,:,i) = H;
-%         r(num2str(i)) = r_temp;
-%         c(num2str(i)) = c_temp;
-%     end
-% 
-%     save('harris_out_toy', 'harris_images', 'r', 'c')
-    load('harris_out_toy', 'harris_images', 'r', 'c')
+    for i = 1:size(images, 3)
+        [~, ~, H, r_temp, c_temp] = harris(images(:,:,i), 7, 1000, 2, 2);
+        harris_images(:,:,i) = H;
+        r(num2str(i)) = r_temp;
+        c(num2str(i)) = c_temp;
+    end
+
+    save('harris_out_toy', 'harris_images', 'r', 'c')
+%    load('harris_out_toy', 'harris_images', 'r', 'c')
 
     window_size = 15;
     Vxs = zeros(floor(im_size(1)/window_size), floor(im_size(2)/window_size), size(harris_images, 3)-1);
@@ -39,8 +39,8 @@
     Vys_display = zeros(im_size(1),im_size(2), size(Vys,3));
     
     half_window = (window_size - 1)/2;
-    Vxs_display(half_window:window_size:end-half_window, half_window:window_size:end-half_window,:) = window_size*Vxs(:,:,:);
-    Vys_display(half_window:window_size:end-half_window, half_window:window_size:end-half_window,:) = window_size*Vys(:,:,:);
+    Vxs_display(half_window:window_size:end-half_window, half_window:window_size:end-half_window,:) = Vxs(:,:,:);
+    Vys_display(half_window:window_size:end-half_window, half_window:window_size:end-half_window,:) = Vys(:,:,:);
     
     size(Vxs_display)
     size(Vxs)

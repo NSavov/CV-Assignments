@@ -1,20 +1,21 @@
-image = imread('pingpong/0001.jpeg');
+image = imread('person_toy/00000001.jpg');
 %7, 300, 3.2, 4
-[Ix, Iy, H, r, c] = harris(image, 7, 30, 4, 7);
+[Ix, Iy, H, r, c] = harris(image, 7, 1000, 2, 2);
 
 %plots
-subplot(131)
+subplot(221)
 imshow(Ix,[])
 
-subplot(132)
+subplot(222)
 imshow(Iy,[])
 
-subplot(133)
+subplot(223)
 imshow(H, [])
 
-subplot(133)
+subplot(224)
 imshow(image,[])
 hold on
 scatter(c, r, 'r.')
 hold off
+max(max(H))
     

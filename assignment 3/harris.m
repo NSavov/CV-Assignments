@@ -4,8 +4,6 @@ function [Ix, Iy, H, r, c] = harris(image, n, threshold, sigmaD, sigmaP)
 %threshold - H threshold
 %sigmaD - derivative gaussian sigma
 %sigmaP - window gaussian sigma
- 
-    half_window = (n-1)/2;
     
     %convert to grayscale if it is not
     if size(image, 3) > 1
@@ -61,8 +59,8 @@ function [Ix, Iy, H, r, c] = harris(image, n, threshold, sigmaD, sigmaP)
     filter_window_size = 5;
     c = [];
     r = [];
-    H = H./max(max(H));
-    threshold = mean(H(H>0))*1.5;
+    % H = H./max(max(H));
+    % threshold = mean(H(H>0))*1.5;
     for x = 1:filter_window_size:size_x - filter_window_size
         for y = 1:filter_window_size:size_y - filter_window_size
 %             fH = H(H>0);
