@@ -1,6 +1,6 @@
 image = imread('pingpong/0001.jpeg');
-
-[Ix, Iy, H, r, c] = harris(image, 7, 300, 3.5, 3);
+%7, 300, 3.2, 4
+[Ix, Iy, H, r, c] = harris(image, 7, 30, 4, 7);
 
 %plots
 subplot(131)
@@ -17,5 +17,4 @@ imshow(image,[])
 hold on
 scatter(c, r, 'r.')
 hold off
-    
     

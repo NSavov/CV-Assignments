@@ -42,7 +42,7 @@ function [Ix, Iy, H, r, c] = harris(image, n, threshold, sigmaD, sigmaP)
             for u = x-half_window:x+half_window
                 for v =  y-half_window:y+half_window
                     %calculate the Q matrix for the selected pixel
-                     Q = Q + [Sxx(x, y) Sxy(x, y); Sxy(x, y) Syy(x, y)];%reshape(Q(u,v, :, :), [2 2]);
+                     Q = Q + [Sxx(u, v) Sxy(u, v); Sxy(u, v) Syy(u, v)];%reshape(Q(u,v, :, :), [2 2]);
                 end
             end
             %e = eig(sumQ);
@@ -52,8 +52,17 @@ function [Ix, Iy, H, r, c] = harris(image, n, threshold, sigmaD, sigmaP)
     end
     
     %leave only the pixels with H values higher than the threshold
-    H(H<threshold) = 0;
+%     H(H>0)
     
+    fH = H(H>0);
+    maxDif = max(fH) - min(fH);
+%     fH = fH/maxDif;
+%     maxDif = abs(mean(fH) - max(fH));
+
+%     figure()
+    threshold = mean(fH)*5.5; %+ 0.01*maxDif;
+  
+    H(H<threshold) = 0;
     %find indices of the remaining positive H values
     [r,c] = find(H>0);
 end

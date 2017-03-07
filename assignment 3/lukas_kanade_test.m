@@ -1,5 +1,5 @@
-sphere1 = imread('pingpong/0000.jpeg');%'sphere1.ppm');
-sphere2 = imread('pingpong/0001.jpeg');%'sphere2.ppm');
+sphere1 = imread('sphere1.ppm');
+sphere2 = imread('sphere2.ppm');
 %sphere1 = imread('pingpong/0001.jpeg');
 %sphere2 = imread('pingpong/0002.jpeg');
 synth1 = imread('synth1.pgm');
