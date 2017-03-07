@@ -37,26 +37,12 @@ function [Ix, Iy, H, r, c] = harris(image, n, threshold, sigmaD, sigmaP)
 
     size_x = size(image, 1);
     size_y = size(image, 2);
-%     H = zeros(size_x, size_y); % this is called R on the slides
-    
-    %iterate over every pixel
-%     for x = half_window+1:size_x-half_window-1
-%         for y = half_window+1:size_y-half_window-1
-%             Q = zeros(2,2);
-%             %iterate over the pixels in the window around the selected pixel
-%             Q = Q + [Sxx(x, y) Sxy(x, y); Sxy(x, y) Syy(x, y)];%reshape(Q(u,v, :, :), [2 2]);
-%    
-%             %e = eig(sumQ);
-%             %calculate the H value for the selected pixel
-%             H(x,y) = det(Q) - 0.04*trace(Q);%e(1)*e(2)-0.04*(e(1) + e(2))^2;
-%         end
-%     end
     
     H = (A.*C - B.*B) - 0.04*(A+C).*(A+C);
     
     %leave only the pixels with H values higher than the threshold
 %     H(H>0)
-    filter_window_size = 5;
+    filter_window_size = 15;
     c = [];
     r = [];
     % H = H./max(max(H));
