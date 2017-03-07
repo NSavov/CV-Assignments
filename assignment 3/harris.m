@@ -16,7 +16,7 @@ function [Ix, Iy, H, r, c] = harris(image, n, threshold, sigmaD, sigmaP)
     %image = padarray(image, [half_window, half_window]);
     
     %calculate the x and y gradients
-    f = fspecial('gaussian', [3 3], sigmaD);
+    f = fspecial('gaussian', [n n], sigmaD);
     [Gx,Gy] = gradient(f); % Gx is the partial derivative of a Gaussian kernel
     %over the x axis. Therefore it is positive to the left (over negative x
     %values, where the curve grows), gets to zero (at the mean, where the
@@ -30,39 +30,39 @@ function [Ix, Iy, H, r, c] = harris(image, n, threshold, sigmaD, sigmaP)
     Ixx = Ix.*Ix; % remember the definition of Q. We need all this combinations of Ix and Iy
     Iyy = Iy.*Iy;
     Ixy = Ix.*Iy;
-    gkernel = fspecial('gaussian', [3 3], sigmaP); % the autocorrelation
+    gkernel = fspecial('gaussian', [n n], sigmaP); % the autocorrelation
     % weights every pixel intensity with a gaussian distribution: that is,
     % convolve the intensities with a gaussian kernel
-    Sxx = conv2( Ixx, gkernel, 'same');
-    Syy = conv2(Iyy, gkernel, 'same');
-    Sxy = conv2(Ixy, gkernel,  'same');
+    A = conv2( Ixx, gkernel, 'same');
+    C = conv2(Iyy, gkernel, 'same');
+    B = conv2(Ixy, gkernel,  'same');
 
     size_x = size(image, 1);
     size_y = size(image, 2);
-    H = zeros(size_x, size_y); % this is called R on the slides
+%     H = zeros(size_x, size_y); % this is called R on the slides
     
     %iterate over every pixel
-    for x = half_window+1:size_x-half_window-1
-        for y = half_window+1:size_y-half_window-1
-            Q = zeros(2,2);
-            %iterate over the pixels in the window around the selected pixel
-            for u = x-half_window:x+half_window
-                for v =  y-half_window:y+half_window
-                    %calculate the Q matrix for the selected pixel
-                     Q = Q + [Sxx(u, v) Sxy(u, v); Sxy(u, v) Syy(u, v)];%reshape(Q(u,v, :, :), [2 2]);
-                end
-            end
-            %e = eig(sumQ);
-            %calculate the H value for the selected pixel
-            H(x,y) = det(Q) - 0.04*trace(Q);%e(1)*e(2)-0.04*(e(1) + e(2))^2;
-        end
-    end
+%     for x = half_window+1:size_x-half_window-1
+%         for y = half_window+1:size_y-half_window-1
+%             Q = zeros(2,2);
+%             %iterate over the pixels in the window around the selected pixel
+%             Q = Q + [Sxx(x, y) Sxy(x, y); Sxy(x, y) Syy(x, y)];%reshape(Q(u,v, :, :), [2 2]);
+%    
+%             %e = eig(sumQ);
+%             %calculate the H value for the selected pixel
+%             H(x,y) = det(Q) - 0.04*trace(Q);%e(1)*e(2)-0.04*(e(1) + e(2))^2;
+%         end
+%     end
+    
+    H = (A.*C - B.*B) - 0.04*(A+C).*(A+C);
     
     %leave only the pixels with H values higher than the threshold
 %     H(H>0)
     filter_window_size = 5;
     c = [];
     r = [];
+    H = H./max(max(H));
+    threshold = mean(H(H>0))*1.5;
     for x = 1:filter_window_size:size_x - filter_window_size
         for y = 1:filter_window_size:size_y - filter_window_size
 %             fH = H(H>0);
@@ -71,7 +71,7 @@ function [Ix, Iy, H, r, c] = harris(image, n, threshold, sigmaD, sigmaP)
 %         %     maxDif = abs(mean(fH) - max(fH));
 % 
 %         %     figure()
-%             threshold = mean(fH)*5.5; %+ 0.01*maxDif;
+             %+ 0.01*maxDif;
 % 
 %             H(H<threshold) = 0;
 %             %find indices of the remaining positive H values
