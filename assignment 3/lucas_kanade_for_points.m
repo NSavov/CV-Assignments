@@ -1,4 +1,6 @@
-function [Vx, Vy] = lucas_kanade_for_points(image1, image2, window_size, c, r)
+function [Vx, Vy] = lucas_kanade_for_points(image1, image2, window_size, c, r, gaussian_sigma)
+image1 = imgaussfilt(image1, gaussian_sigma);
+image2 = imgaussfilt(image2, gaussian_sigma);
     [Ix, Iy] = imgradientxy(image1);
     sizex = size(image1, 1);
     sizey = size(image1, 2);

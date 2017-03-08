@@ -1,11 +1,13 @@
-function [Ix, Iy, H, r, c] = harris(image, n, threshold, sigmaD, sigmaP)
+function [Ix, Iy, H, r, c] = harris(image,  denoise_sigma, grad_gauss_size, gauss_size, sigmaD, sigmaP, filter_window_size)
 %image - input image
 %n - window size
 %threshold - H threshold
 %sigmaD - derivative gaussian sigma
 %sigmaP - window gaussian sigma
     
-    gauss_size = n;
+
+    %smooth image to reduce possibility of detecting weak and fake corners
+    image= imgaussfilt(image, denoise_sigma);
 
     %convert to grayscale if it is not
     if size(image, 3) > 1
@@ -16,7 +18,7 @@ function [Ix, Iy, H, r, c] = harris(image, n, threshold, sigmaD, sigmaP)
     %image = padarray(image, [half_window, half_window]);
     
     %calculate the x and y gradients
-    f = fspecial('gaussian', [5 5], sigmaD);
+    f = fspecial('gaussian', [grad_gauss_size grad_gauss_size], sigmaD);
     [Gx,Gy] = gradient(f); % Gx is the partial derivative of a Gaussian kernel
     %over the x axis. Therefore it is positive to the left (over negative x
     %values, where the curve grows), gets to zero (at the mean, where the
@@ -52,7 +54,6 @@ function [Ix, Iy, H, r, c] = harris(image, n, threshold, sigmaD, sigmaP)
     % We want only one of them to be the corner. So we now explore each
     % value of H to find out if its the biggest of its neighborhood. And 
     % only so we check if it also passes the corner criteria.
-    filter_window_size = 15;
     c = [];
     r = [];
     % H = H./max(max(H));
