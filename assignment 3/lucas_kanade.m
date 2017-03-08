@@ -1,4 +1,15 @@
 function [Vx, Vy] = lucas_kanade(image1, image2, window_size)
+%Given a sequence of two grayscale images, computes the lucas-kanade
+%algorithm on them to find the velocities in every region (of a given size)
+%in the images
+%image1 - first frame of the sequence
+%image2 - second frame of the sequence
+%window_size - window size. The algorithm will produce as many arrows as
+%square windows fit in the images
+%Vx - x coordinates of the velocities. The velocity of the i'th window is
+%given by (Vx(i), Vy(i))
+%Vy - y coordinates of the velocities. The velocity of the i'th window is
+%given by (Vx(i), Vy(i))
     [Ix, Iy] = imgradientxy(image1); % take derivatives of intensity over space
     sizex = size(image1, 1);
     sizey = size(image1, 2);
