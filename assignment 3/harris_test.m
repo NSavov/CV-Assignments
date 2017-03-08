@@ -17,7 +17,7 @@ subplot(223)
 imshow(H, [])
 
 subplot(224)
-figure()
+%figure()
 imshow(image,[])
 hold on
 scatter(c, r, 'r.')
