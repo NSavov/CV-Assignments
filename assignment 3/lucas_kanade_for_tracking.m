@@ -1,4 +1,4 @@
-function [Vx, Vy] = lucas_kanade_for_tracking(image1, image2, window_size, c, r)
+function [Vx, Vy] = lucas_kanade_for_tracking(image1, image2, window_size, c, r, gaussian_sigma)
 %Given a sequence of two grayscale images, computes the lucas-kanade
 %algorithm on them to find the velocities in every region (of a given size)
 %centered at given coordinates in the images
@@ -17,6 +17,9 @@ function [Vx, Vy] = lucas_kanade_for_tracking(image1, image2, window_size, c, r)
 %given by (Vx(i), Vy(i))
 %Vy - y coordinates of the velocities. The velocity of the i'th window is
 %given by (Vx(i), Vy(i))
+%gaussian_sigma - the sigma used to smooth the images in advance
+    image1 = imgaussfilt(image1, gaussian_sigma);
+    image2 = imgaussfilt(image2, gaussian_sigma);
     [Ix, Iy] = imgradientxy(image1);
     sizex = size(image1, 1);
     sizey = size(image1, 2);
@@ -45,6 +48,5 @@ function [Vx, Vy] = lucas_kanade_for_tracking(image1, image2, window_size, c, r)
             solution = pinv(A)*b;
             Vx = [Vx solution(1)];
             Vy = [Vy solution(2)];
-            %iterate over the pixels in the window around the selected pixel
     end
 end

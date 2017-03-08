@@ -25,6 +25,5 @@ image2 = imgaussfilt(image2, gaussian_sigma);
             solution = pinv(A)*b;
             Vx = [Vx solution(1)];
             Vy = [Vy solution(2)];
-            %iterate over the pixels in the window around the selected pixel
     end
 end

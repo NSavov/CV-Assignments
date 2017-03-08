@@ -2,8 +2,8 @@
     image_ext = '*.jpeg';
     
 %uncomment for the other video
-%     image_dir = 'person_toy';
-%     image_ext = '*.jpg';
+    image_dir = 'person_toy';
+    image_ext = '*.jpg';
     
     files = dir(fullfile(image_dir, image_ext));
     im_size = size(imread(fullfile(image_dir, files(1).name)));
@@ -53,7 +53,7 @@
         c(num2str(i)) = round(ct);
         r(num2str(i)) = round(rt);
         
-        [Vx_temp, Vy_temp] = lucas_kanade_for_points(images(:,:,i), images(:,:,i+1), window_size, c(num2str(i)), r(num2str(i)), lucas_kanade_sigma);
+        [Vx_temp, Vy_temp] = lucas_kanade_for_tracking(images(:,:,i), images(:,:,i+1), window_size, c(num2str(i)), r(num2str(i)), lucas_kanade_sigma);
 
         
         
@@ -78,7 +78,6 @@
     outputVideo = VideoWriter(fullfile('.',strcat('optical_flow_',image_dir,'.avi')));
     outputVideo.FrameRate = 15;
     open(outputVideo)
-    [mesh_x, mesh_y] = meshgrid(0:1:(im_size(2))-1, 0:1:(im_size(1))-1);
     for i = 1: size(images, 3)-1
         imshow(images(:,:,i),[])
         hold on
