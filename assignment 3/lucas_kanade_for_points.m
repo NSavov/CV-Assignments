@@ -8,7 +8,7 @@ function [Vx, Vy] = lucas_kanade_for_points(image1, image2, window_size, c, r)
     for i = 1:size(c,2)
             wx = r(i)-floor(window_size/2)+1;
             wy = c(i)-floor(window_size/2)+1;
-            if wx<=0 || wy<=0
+            if wx<=0 || wy<=0 || (wx+window_size) > sizex || (wy+window_size) > sizey
                 Vx = [Vx 0];
                 Vy = [Vy 0];
                 continue

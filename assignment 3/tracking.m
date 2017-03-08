@@ -1,7 +1,7 @@
  
 
-    image_dir = 'person_toy/';
-    image_ext = '*.jpg';
+    image_dir = 'pingpong/';
+    image_ext = '*.jpeg';
     files = dir(fullfile(image_dir, image_ext));
     im_size = size(imread(fullfile(image_dir, files(1).name)));
     images = zeros(im_size(1), im_size(2), size(files,1), 'uint8');
@@ -13,30 +13,29 @@
 %     harris_images = zeros(im_size(1), im_size(2), size(files,1), 'uint8');
     r = containers.Map;
     c = containers.Map;
-
-%     for i = 1:size(images, 3)
-%         [~, ~, H, r_temp, c_temp] = harris(images(:,:,i), 7, 1000, 2, 2);
-%         harris_images(:,:,i) = H;
-%         if i == 1
-%             r(num2str(i)) = r_temp;
-%             c(num2str(i)) = c_temp;
-%         end
-%     end
-
- [~, ~, ~, r_temp, c_temp] = harris(images(:,:,1), 7, 1000, 2, 2);
+%  image = imgaussfilt(images(:,:,1), 1.5);
+ [~, ~, ~, r_temp, c_temp] = harris(image, 7, 30, 2, 2);
  r('1') = r_temp;
  c('1') = c_temp;
 
-%     save('harris_out_toy', 'harris_images', 'r', 'c')
-%    load('harris_out_toy', 'harris_images', 'r', 'c')
-
-    window_size = 25;
-    Vxs = zeros(size(images));%zeros(floor(im_size(1)/window_size), floor(im_size(2)/window_size), size(harris_images, 3)-1);
-    Vys = zeros(size(images));%zeros(floor(im_size(1)/window_size), floor(im_size(2)/window_size), size(harris_images, 3)-1);
+    window_size = 5;
+    Vxs = zeros(size(images));
+    Vys = zeros(size(images));
 
     ct = c('1');
     rt = r('1');
     for i = 1:size(images, 3)-1
+        
+        to_delete = find(round(rt)>=size(images(:,:,i), 1));
+        rt(to_delete)=[];
+        ct(to_delete) = [];
+        
+        to_delete = find(round(ct)>=size(images(:,:,i), 1));
+        rt(to_delete)=[];
+        ct(to_delete) = [];
+        
+        c(num2str(i)) = round(ct);
+        r(num2str(i)) = round(rt);
         
         [Vx_temp, Vy_temp] = lucas_kanade_for_points(images(:,:,i), images(:,:,i+1), window_size, c(num2str(i)), r(num2str(i)));
 
@@ -53,18 +52,12 @@
         rt = rt + 15*Vy_temp;
         ct = ct + 15*Vx_temp;
         
-        c(num2str(i+1)) = round(ct);
-        r(num2str(i+1)) = round(rt);
+        rt(rt<1)=1;
+        ct(ct<1)=1;
+        
         Vxs(:,:,i) = Vx_new;
         Vys(:,:,i) = Vy_new;
     end
-
-    Vxs_display = Vxs;%zeros(im_size(1),im_size(2), size(Vxs,3));
-    Vys_display = Vys;%zeros(im_size(1),im_size(2), size(Vys,3));
-    
-    half_window = (window_size - 1)/2;
-%     Vxs_display(half_window:window_size:end-half_window, half_window:window_size:end-half_window,:) = Vxs(:,:,:);
-%     Vys_display(half_window:window_size:end-half_window, half_window:window_size:end-half_window,:) = Vys(:,:,:);
     
     [mesh_x, mesh_y] = meshgrid(0:1:(im_size(2))-1, 0:1:(im_size(1))-1);
     figure()
@@ -73,8 +66,8 @@
         hold on
         scatter(c(num2str(i)), r(num2str(i)), 'r.')
 
-        quiver( Vxs_display(:,:,i), Vys_display(:,:,i), 50);
+        quiver( Vxs(:,:,i), Vys(:,:,i), 30);
         hold off
-        pause(0.1)
+        pause(0.3)
     end
     
