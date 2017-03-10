@@ -14,6 +14,8 @@ function [matches, scores, f1, f2] = match_features(img1, img2)
     % gets the matches found between the two sets of descriptors along with
     % their match score (squared euclidean distance between the 2
     % descriptors). if 1.5*squared_distance(Di, Dj) < squared_distance(Di,
-    % Dk) for every k != j, then Dj is considered a match for Di
+    % Dk) for every k != j, then Dj is considered a match for Di.
+    % matches(:,i) = [u; v] means that feature u in f1 is matched to
+    % feature v in f2
     [matches, scores] = vl_ubcmatch(d1, d2);
 end
