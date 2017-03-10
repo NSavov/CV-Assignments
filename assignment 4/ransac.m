@@ -1,15 +1,15 @@
-function [T] = ransac(image1, image2, N, subset_size)
+function [T] = ransac(first, matching, N, subset_size)
 
-    [all_matches, ~, f1, f2] = match_features(image2, image1);
+    [all_matches, ~, f1, f2] = match_features(matching, first);
     
     threshold_distance = 10;
     
     best_inliers = 0;
     
-
+ T = [1 0 0; 0 1 0; 0 0 1];
     for i = 1:N
         
-        T = [1 0 0; 0 1 0; 0 0 1];
+%        
         inliers = 0;
         perm = randperm(size(all_matches,2)) ;
         selected = perm(1:subset_size);
@@ -39,22 +39,23 @@ function [T] = ransac(image1, image2, N, subset_size)
         t = [t(1) t(3) 0; t(2) t(4) 0; t(5) t(6) 1];
         
         for k = 1:size(all_matches, 2)
-            coords_original = [f1(1, all_matches(1,k)), f1(2, all_matches(1,k)), 1];
-            coords_expected = [f2(1, all_matches(2,k)), f2(2, all_matches(2,k)), 1];
+            coords_original = [f1(1, all_matches(1,k)), f1(2, all_matches(1,k)), 2]-1;
+            coords_expected = [f2(1, all_matches(2,k)), f2(2, all_matches(2,k)), 2]-1;
             coords_result = coords_original*t;
             distance = sqrt(sum((coords_result - coords_expected).^2));
+            
 %             distance
-            if distance < threshold_distance
+            if distance <= threshold_distance
             	inliers = inliers + 1;
             end
         end
         
         
-        if inliers>best_inliers
-%             inliers
+        if inliers > best_inliers
+            inliers
             best_inliers = inliers;
             T = t;
         end
     end
-    T = t;
+    size(all_matches,2) - best_inliers
 end
