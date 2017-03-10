@@ -1,11 +1,9 @@
 % prepare the images as single precision double matrices
 original_img1 = imread('boat1.pgm');
 original_img2 = imread('boat2.pgm');
-img1 = single(original_img1);
-img2 = single(original_img2);
 
 % get all the SIFT gadgets
-[matches, scores, f1, f2] = match_features(img1, img2);
+[matches, scores, f1, f2] = match_features(original_img1, original_img2);
 
 figure() ; 
 side_view = cat(2, original_img1, original_img2);
