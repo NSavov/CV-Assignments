@@ -39,8 +39,8 @@ function [T] = ransac(first, matching, N, subset_size)
         t = [t(1) t(3) 0; t(2) t(4) 0; t(5) t(6) 1];
         
         for k = 1:size(all_matches, 2)
-            coords_original = [f1(1, all_matches(1,k)), f1(2, all_matches(1,k)), 2]-1;
-            coords_expected = [f2(1, all_matches(2,k)), f2(2, all_matches(2,k)), 2]-1;
+            coords_original = [f1(1, all_matches(1,k)), f1(2, all_matches(1,k)), 1];
+            coords_expected = [f2(1, all_matches(2,k)), f2(2, all_matches(2,k)), 1];
             coords_result = coords_original*t;
             distance = sqrt(sum((coords_result - coords_expected).^2));
             
@@ -52,7 +52,6 @@ function [T] = ransac(first, matching, N, subset_size)
         
         
         if inliers > best_inliers
-            inliers
             best_inliers = inliers;
             T = t;
         end
