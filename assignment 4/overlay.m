@@ -10,20 +10,30 @@ corners = [1 1 1; 1 size(matching, 1) 1 ;size(matching, 2) 1 1; size(matching, 2
 
 new_corners = corners*T;
 
-[~, left_ind] = min(new_corners(:, 1));
-[~, right_ind] = max(new_corners(:, 1));
-[~, top_ind] = min(new_corners(:, 2));
-[~, bottom_ind] = max(new_corners(:, 2));
+left_c = min(new_corners(:, 1));
+right_c = max(new_corners(:, 1));
+top_c = min(new_corners(:, 2));
+bottom_c = max(new_corners(:, 2));
 
 translate_x = 0;
-if new_corners(left_ind, 1) < 1
-    translate_x = abs(new_corners(left_ind, 1))+1;
+if left_c < 1
+    translate_x = abs(left_c)+1;
 end
+
+if left_c > 1
+    translate_x = -left_c+1;
+end
+
 translate_y = 0;
-if new_corners(top_ind, 2) < 1
-%     new_corners(top_ind, 2)
-    translate_y = abs(new_corners(top_ind, 2))+1;
+if top_c < 1
+    translate_y = abs(top_c)+1;
 end
+
+if top_c > 1
+    translate_y = -top_c+1;
+end
+
+
 
 hold on
 source = imtranslate(source,[translate_x, translate_y],'OutputView','full');
