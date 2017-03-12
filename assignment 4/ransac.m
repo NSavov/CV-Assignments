@@ -42,20 +42,7 @@ function [T] = ransac(first, matching, N, subset_size)
         coords_expected = [f2(1, all_matches(2,:)); f2(2, all_matches(2,:)); ones(1, size(all_matches, 2))]';
         coords_result = coords_original*t;
         distance = sqrt(sum((coords_result - coords_expected).^2, 2));
-        distance
         inliers = size(distance(distance<=threshold_distance), 1);
-        inliers
-%         for k = 1:size(all_matches, 2)
-%             coords_original = [f1(1, all_matches(1,k)), f1(2, all_matches(1,k)), 1];
-%             coords_expected = [f2(1, all_matches(2,k)), f2(2, all_matches(2,k)), 1];
-%             coords_result = coords_original*t;
-%             distance = sqrt(sum((coords_result - coords_expected).^2));
-%             
-% %             distance
-%             if distance <= threshold_distance
-%             	inliers = inliers + 1;
-%             end
-%         end
         
         
         if inliers > best_inliers
@@ -63,5 +50,4 @@ function [T] = ransac(first, matching, N, subset_size)
             T = t;
         end
     end
-    size(all_matches,2) - best_inliers
 end

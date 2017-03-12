@@ -12,4 +12,4 @@ T = ransac(source, matching, 100, 20);
 
 % T = ransac(source, matching, 100, 50);
 
-image_stitching(image1, image2, T)
+image_stitching(image1, image2, T, 'average_overlap')

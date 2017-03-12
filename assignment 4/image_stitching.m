@@ -1,4 +1,4 @@
-function [] = image_stitching(image1, image2, T)
+function [] = image_stitching(image1, image2, T, combination_method)
 % source = rgb2gray(image1);
 % matching = rgb2gray(image2);
 source = image1;
@@ -66,27 +66,33 @@ transformed = padarray(transformed,[pad_matching_x, pad_matching_y],0,'post');
 
 stitched = zeros(size(transformed));
 
-% for x = 1:size(stitched,1)
-%     for y = 1:size(stitched, 2)
-%         
-%         if sum(source(x,y,:)) == 0
-%             value = transformed(x,y,:);
-%         elseif sum(transformed(x,y,:)) == 0
-%             value = source(x,y,:);
-%         else
-%             value = source(x,y,:);%(transformed(x,y,:) + source(x,y,:))/2;
-%         end
-%         
-%         stitched(x,y,:) = value;
-%     end
-% end
-stitched = max(source, transformed);
-stitched = source/2 + transformed/2;
+if strcmp(combination_method, 'average_overlap')
+    for x = 1:size(stitched,1)
+        for y = 1:size(stitched, 2)
+
+            if sum(source(x,y,:)) == 0
+                value = transformed(x,y,:);
+            elseif sum(transformed(x,y,:)) == 0
+                value = source(x,y,:);
+            else
+                value = (transformed(x,y,:)/2 + source(x,y,:)/2);
+            end
+
+            stitched(x,y,:) = value;
+        end
+    end
+end
+
+if strcmp(combination_method, 'max')
+    stitched = max(source, transformed);
+end
+
+if strcmp(combination_method, 'average')
+    stitched = source/2 + transformed/2;
+end
+
 stitched = uint8(stitched);
 % transformed(1:translate_matching_x, :)
 imshow(stitched);
-% hold on
-% h = imshow(source);
-% set(h,'AlphaData', 0.5)
-% hold off
+imwrite(stitched, 'stitched.jpeg')
 end
