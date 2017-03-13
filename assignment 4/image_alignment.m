@@ -5,8 +5,8 @@
 image1 = imread('left.jpg');
 image2 = imread('right.jpg');
 
-% source = rgb2gray(image1);
-% matching = rgb2gray(image2);
+source = rgb2gray(image1);
+matching = rgb2gray(image2);
 
 T = ransac(source, matching, 100, 20);
 
