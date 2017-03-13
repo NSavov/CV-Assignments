@@ -1,4 +1,4 @@
-function [] = image_stitching(image1, image2, T, combination_method)
+function [stitched] = image_stitching(image1, image2, T, combination_method)
 % source = rgb2gray(image1);
 % matching = rgb2gray(image2);
 source = image1;
@@ -23,26 +23,19 @@ if left_c < 1
     translate_source_x = abs(left_c) + 1;
 end
 
-translate_matching_x = 0;
-if left_c > 1
-    translate_matching_x = left_c - 1;
-end
+
 
 translate_source_y = 0;
 if top_c < 1
     translate_source_y = abs(top_c) + 1;
 end
 
-translate_matching_y = 0;
-if top_c > 1
-    translate_matching_y = top_c - 1;
-end
-
-
 source = imtranslate(source,[translate_source_x, translate_source_y],'OutputView','full');
-% transformed = imtranslate(transformed,[translate_matching_x, translate_matching_y],'OutputView','full');
 
-%/////////////////////////////////
+%///////
+%Padding:
+%///////
+
 pad_source_x = 0;
 pad_matching_x = 0;
 pad_source_y = 0;
@@ -92,7 +85,4 @@ if strcmp(combination_method, 'average')
 end
 
 stitched = uint8(stitched);
-% transformed(1:translate_matching_x, :)
-imshow(stitched);
-imwrite(stitched, 'stitched.jpeg')
 end

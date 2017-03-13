@@ -16,4 +16,7 @@ subset_size = 20;
 % some of those that vl_feat found to be good matches
 T = ransac(image1, image2, 100, subset_size);
 
-image_stitching(image1, image2, T, 'max')
+stitched = image_stitching(image1, image2, T, 'average_overlap');
+
+imshow(stitched);
+imwrite(stitched, 'stitched.jpeg')
