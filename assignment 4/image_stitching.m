@@ -81,7 +81,7 @@ if strcmp(combination_method, 'max')
 end
 
 if strcmp(combination_method, 'average')
-    stitched = (source + transformed)/2;
+    stitched = source/2 + transformed/2;
 end
 
 stitched = uint8(stitched);
