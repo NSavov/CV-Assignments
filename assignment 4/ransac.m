@@ -9,8 +9,6 @@ function [T] = ransac(first, matching, N, subset_size)
  T = [1 0 0; 0 1 0; 0 0 1];
     for i = 1:N
         
-%        
-        inliers = 0;
         perm = randperm(size(all_matches,2)) ;
         selected = perm(1:subset_size);
         matches = all_matches(:,selected);

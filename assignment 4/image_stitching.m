@@ -5,9 +5,9 @@ source = image1;
 matching = image2;
 
 
-warpT = affine2d( T);
-transformed = imwarp(matching, warpT); %,'OutputView', imref2d(size(image2))
-% transformed = image_transform(matching, T);
+% warpT = affine2d( T);
+% transformed = imwarp(matching, warpT); %,'OutputView', imref2d(size(image2))
+transformed = image_transform(matching, T);
 
 corners = [1 1 1; 1 size(matching, 1) 1 ;size(matching, 2) 1 1; size(matching, 2) size(matching, 1) 1];
 
@@ -40,7 +40,7 @@ end
 
 
 source = imtranslate(source,[translate_source_x, translate_source_y],'OutputView','full');
-transformed = imtranslate(transformed,[translate_matching_x, translate_matching_y],'OutputView','full');
+% transformed = imtranslate(transformed,[translate_matching_x, translate_matching_y],'OutputView','full');
 
 %/////////////////////////////////
 pad_source_x = 0;
@@ -88,7 +88,7 @@ if strcmp(combination_method, 'max')
 end
 
 if strcmp(combination_method, 'average')
-    stitched = source/2 + transformed/2;
+    stitched = (source + transformed)/2;
 end
 
 stitched = uint8(stitched);

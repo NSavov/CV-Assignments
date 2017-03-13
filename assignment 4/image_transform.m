@@ -34,7 +34,7 @@ function [transformed] = image_transform(image, T)
     % define image dimensions
     width = ceil(right_c + offset_x); % image expands horizontally up to righmost corner x coordinate plus x offset
     height = ceil(bottom_c + offset_y); % and vertically in a similar way
-    transformed = zeros(height, width); % a buffer for our transformed image
+    transformed = zeros(height, width, size(image, 3)); % a buffer for our transformed image
 
     % each new pixel coordinates are the result of applying T to old image
     % pixels. To go the other way around (i.e. from new coordinates back to
@@ -68,7 +68,7 @@ function [transformed] = image_transform(image, T)
            % pixels don't correspond to anything in the old image so we
            % should be left black
            if old_x >= 1 && old_x <= size(image, 2) && old_y >= 1 && old_y <= size(image, 1)
-               transformed(new_y, new_x) = image(old_y, old_x);
+               transformed(new_y, new_x, :) = image(old_y, old_x, :);
            end
         end
     end
