@@ -20,7 +20,7 @@ sel = perm(1:50) ;
 x1 = f1(1,matches(1,sel));
 % don't forget to add img1 width to the coordinates of img2 since they're
 % shown side by side
-x2 = f2(1,matches(2,sel)) + size(img1,2);
+x2 = f2(1,matches(2,sel)) + size(original_img1,2);
 y1 = f1(2,matches(1,sel)); % get the second coordinate
 y2 = f2(2,matches(2,sel));
 
