@@ -2,6 +2,8 @@
 % http://www.vlfeat.org/overview/sift.html
 function [matches, scores, f1, f2] = match_features(img1, img2)
 
+    img1 = single(img1);
+    img2 = single(img2);
     % get some image features (for boat1 it would be 2211). f1 will be a
     % 4x2211 matrix (each column a feature frama of the form [X; Y; S;
     % TH]), X,Y giving the fractional center of the frame, S is the scale
