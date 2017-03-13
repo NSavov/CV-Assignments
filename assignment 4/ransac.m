@@ -7,7 +7,15 @@ function [T] = ransac(first, matching, N, subset_size)
 % subset_size: number of matching features to consider in each ransac
 % iteration. Must be less than the total number of matches found by vl_feat
 % T: affine transformation matrix that converts matchint to first
+    
+    % make sure images are grayscaled
+    if size(first,3) > 1
+        first = rgb2gray(first);
+    end
 
+    if size(matching,3) > 1
+        matching = rgb2gray(matching);
+    end
     % get vl_feat features
     [all_matches, ~, f1, f2] = match_features(matching, first);
     
