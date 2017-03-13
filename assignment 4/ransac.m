@@ -1,5 +1,13 @@
 function [T] = ransac(first, matching, N, subset_size)
 
+    if size(first,3) > 1
+        first = rgb2gray(first);
+    end
+
+    if size(matching,3) > 1
+        matching = rgb2gray(matching);
+    end
+
     [all_matches, ~, f1, f2] = match_features(matching, first);
     
     threshold_distance = 10;

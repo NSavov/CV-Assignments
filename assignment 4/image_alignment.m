@@ -3,25 +3,17 @@
 % image1 = imread('boat2.pgm');
 % subset_size = 20;
 
-% imshow(image2)
-
 % source = image1;
 % matching = image2;
 
 image1 = imread('left.jpg');
 image2 = imread('right.jpg');
-subset_size = 50;
+subset_size = 20;
 
-source_gray = image1;
-if size(image1,3) > 1
-    source_gray = rgb2gray(image1);
-end
+% ransac doesn't care that the right image has extra stuff that the left
+% image doesn't. vl_feat will find common features that ransac can try to
+% match anyway. Ransac won't try to match every pixel in the image, only
+% some of those that vl_feat found to be good matches
+T = ransac(image1, image2, 100, subset_size);
 
-matching_gray = image2;
-if size(image2,3) > 1
-    matching_gray = rgb2gray(image2);
-end
-
-T = ransac(source_gray, matching_gray, 100, 20);
-
-image_stitching(image1, image2, T, 'average_overlap')
+image_stitching(image1, image2, T, 'max')
