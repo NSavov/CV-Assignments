@@ -38,7 +38,7 @@ set(h,'linewidth', 1, 'color', 'b');
 vl_plotframe(f1(:,matches(1,sel)));
 % before plotting features in our second image, add the width of first
 % image to their x coordinate
-f2(1,:) = f2(1,:) + size(img1,2);
+f2(1,:) = f2(1,:) + size(original_img1,2);
 vl_plotframe(f2(:,matches(2,sel)));
 hold off; % now kiss!
 axis image off;
