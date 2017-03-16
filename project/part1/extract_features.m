@@ -5,12 +5,12 @@ rgb_image = rgb2normedrgb(image);
 opponent_image = rgb2opponent(image);
 
 if strcmp(method, 'dense')
-    [~,sift] = vl_dsift(grayscale_image) ;
+    vl_dsift_set_steps()
+    [~,sift] = vl_dsift(grayscale_image,'size', 5) ;
     
     [~, R_sift] = vl_dsift(single(image(:,:,1)));
     [~, G_sift] = vl_dsift(single(image(:,:,2)));
     [~, B_sift] = vl_dsift(single(image(:,:,3)));
-    
     
     [~, r_sift] = vl_dsift(single(rgb_image(:,:,1)));
     [~, g_sift] = vl_dsift(single(rgb_image(:,:,2)));
@@ -22,7 +22,6 @@ if strcmp(method, 'dense')
 elseif strcmp(method, 'keypoint')
     [~,sift] = vl_sift(grayscale_image) ;
     
-
     [~, R_sift] = vl_sift(single(image(:,:,1)));
     [~, G_sift] = vl_sift(single(image(:,:,2)));
     [~, B_sift] = vl_sift(single(image(:,:,3)));
@@ -39,4 +38,6 @@ end
 RGB_sift = cat(3, R_sift, G_sift, B_sift);
 rgb_sift = cat(3, r_sift, g_sift, b_sift);
 opponent_sift = cat(3, o1_sift, o2_sift, o3_sift);
+
+
 end
