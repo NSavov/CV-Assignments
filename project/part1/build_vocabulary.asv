@@ -21,10 +21,10 @@ for category_ind = 1:size(image_categories, 2)
 
     for i = 1:size(files,1)
         
-        load(strcat(feature_dir, method, '\', sift_type, '\', image_category, '\', files(i).name), '-mat', 'sift');
-        all_sift_features = cat(1, all_sift_features, sift');
+        load(strcat(feature_dir, method, '\', sift_type, '\', image_category, '\', files(i).name), 'sift');
+        cat(1, all_sift_features, sift);
     end
 end
 % end
 size(all_sift_features)
-[idx, C] = kmeans(double(all_sift_features), 50);
+[idx, C] = kmeans(all_sift_features, 50);

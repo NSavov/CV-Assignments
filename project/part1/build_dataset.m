@@ -1,0 +1,1 @@
+build_feature_set('keypoint', 'RGB', 2);
