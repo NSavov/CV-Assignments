@@ -9,4 +9,3 @@ function [output_image] = rgb2normedrgb(input_image)
     output_image(:,:,2) = g./(r+g+b);
     output_image(:,:,3) = b./(r+g+b);
 end
-

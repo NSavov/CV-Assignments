@@ -14,7 +14,7 @@ end
 
 if strcmp(method, 'dense')
     if strcmp(sift_type, 'grayscale')
-        [~,sift] = vl_dsift(grayscale_image) ;
+        [~,sift] = vl_dsift(image, 'Step', 10) ;
     else
         [R_f, R_sift] = vl_dsift(single(image(:,:,1)));
         [G_f, G_sift] = vl_dsift(single(image(:,:,2)));
