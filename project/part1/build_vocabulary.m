@@ -27,4 +27,5 @@ for category_ind = 1:size(image_categories, 2)
 end
 % end
 size(all_sift_features)
-[idx, C] = kmeans(double(all_sift_features), 50);
+[idx, C] = kmeans(double(all_sift_features), 400);
+save(strcat(feature_dir, method, '\', sift_type, '\vocabulary\vocabulary'), 'C');

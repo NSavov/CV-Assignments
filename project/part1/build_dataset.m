@@ -1,1 +1,1 @@
-build_feature_set('keypoint', 'RGB', 2);
+build_feature_set('dense', 'grayscale', 2);
