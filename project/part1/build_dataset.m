@@ -6,4 +6,4 @@ image_categories_test = string({'airplanes_test' 'cars_test' 'faces_test' 'motor
 
 build_feature_set(sift_method, sift_type, sample_size);
 % build_vocabulary(sift_method, sift_type, 100)
-% build_histograms(sift_method, sift_type,image_categories_train)
+% build_histograms(sift_method, sift_type,image_categories_train, '')

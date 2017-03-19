@@ -2,7 +2,7 @@ function [AP] = get_average_precision(labels, scores)
     combined = cat(2, scores, labels);
     combined = sortrows(combined);
     combined = flipud(combined);
-combined
+% combined
     f_c = zeros(size(labels,1), 1);
     counter = 0;
     for i=1:size(labels)

@@ -21,21 +21,25 @@ for category_ind = 1:size(image_categories, 2)
     all_histograms = cat(1, all_histograms, histograms(1:subset_size,:));
 end
 
-labels_cat_1 = cat(1, ones(subset_size, 1), zeros(3*subset_size, 1));
-labels_cat_2 = cat(1, cat(1, zeros(subset_size, 1), ones(subset_size, 1)), zeros(2*subset_size, 1));
-labels_cat_3 = cat(1, cat(1, zeros(2*subset_size, 1), ones(subset_size, 1)), zeros(subset_size, 1));
-labels_cat_4 = cat(1, zeros(3*subset_size, 1), ones(subset_size, 1));
+labels_cat{1} = cat(1, ones(subset_size, 1), zeros(3*subset_size, 1));
+labels_cat{2} = cat(1, cat(1, zeros(subset_size, 1), ones(subset_size, 1)), zeros(2*subset_size, 1));
+labels_cat{3} = cat(1, cat(1, zeros(2*subset_size, 1), ones(subset_size, 1)), zeros(subset_size, 1));
+labels_cat{4} = cat(1, zeros(3*subset_size, 1), ones(subset_size, 1));
 
 ap = zeros(1, 4);
- [predicted_label, accuracy, decision_values] = predict(labels_cat_1, sparse(double(all_histograms)), model{1});
- ap(1) = get_average_precision(labels_cat_1, decision_values);
-
-  [predicted_label, accuracy, decision_values] = predict(labels_cat_2, sparse(double(all_histograms)), model{2});
- ap(2) = get_average_precision(labels_cat_1, decision_values);
- 
-  [predicted_label, accuracy, decision_values] = predict(labels_cat_3, sparse(double(all_histograms)), model{3});
- ap(3) = get_average_precision(labels_cat_1, decision_values);
- 
-  [predicted_label, accuracy, decision_values] = predict(labels_cat_4, sparse(double(all_histograms)), model{4});
- ap(4) = get_average_precision(labels_cat_1, decision_values);
+decision_values = zeros(subset_size*size(image_categories, 2), size(image_categories, 2));
+for i = 1:size(image_categories, 2)
+ [predicted_label, accuracy, d] = predict(labels_cat{i}, sparse(double(all_histograms)), model{i});
+ decision_values(:, i) = d;
+ ap(i) = get_average_precision(labels_cat{i}, decision_values(:, i));
+end
+%   [predicted_label, accuracy, decision_values_2] = predict(labels_cat_2, sparse(double(all_histograms)), model{2});
+%  ap(2) = get_average_precision(labels_cat_1, decision_values_2);
+%  
+%   [predicted_label, accuracy, decision_values_3] = predict(labels_cat_3, sparse(double(all_histograms)), model{3});
+%  ap(3) = get_average_precision(labels_cat_1, decision_values_3);
+%  
+%   [predicted_label, accuracy, decision_values_4] = predict(labels_cat_4, sparse(double(all_histograms)), model{4});
+%  ap(4) = get_average_precision(labels_cat_1, decision_values_4);
  mAP = sum(ap)/4
+ ap

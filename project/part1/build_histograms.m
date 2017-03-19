@@ -1,8 +1,8 @@
-function [] = build_histograms(method, sift_type, image_categories, subset_size)
+function [] = build_histograms(method, sift_type, image_categories, suffix, subset_size)
 
 subset_str = '';
 
-if nargin == 3
+if nargin == 5
   subset_str = strcat('_', int2str(subset_size));
 end
 
@@ -11,7 +11,7 @@ setup_paths;
 
 
 sample_size = 2;
-structure = load(strcat(feature_dir, method, filesep, sift_type, filesep, 'vocabulary', filesep, 'vocabulary_100'));
+structure = load(strcat(feature_dir, method, filesep, sift_type, filesep, 'vocabulary', filesep, 'vocabulary', suffix));
 centroids = structure.C;
 
 
@@ -24,7 +24,7 @@ for category_ind = 1:size(image_categories, 2)
 
     files = dir(fullfile(image_category_dir, image_ext));
 
-    if nargin < 3
+    if nargin < 5
       subset_size = size(files,1);
     end
     
