@@ -17,7 +17,7 @@ function [] = build_vocabulary(method, sift_type, subset_size)
     for category_ind = 1:size(image_categories, 2)
         image_category = char(image_categories(category_ind));
         image_category
-        image_category_dir = strcat(feature_dir, method, filesep, sift_type, filesep, image_category, filesep);
+        image_category_dir = strcat(feature_dir, method, filesep, sift_type, filesep, 'sift', filesep, image_category, filesep);
 
         files = dir(fullfile(image_category_dir, data_ext));
 
@@ -26,13 +26,11 @@ function [] = build_vocabulary(method, sift_type, subset_size)
         end
         
         for i = 1:subset_size
-
-            load(strcat(feature_dir, method, filesep, sift_type, filesep, 'sift', filesep, image_category, filesep, files(i).name), '-mat', 'sift');
+            load(strcat(image_category_dir, files(i).name), '-mat', 'sift');
             all_sift_features = cat(1, all_sift_features, sift');
         end
     end
-    % end
-    size(all_sift_features)
+    
     [~, C] = kmeans(double(all_sift_features), 400);
     vocabulary_file_path = strcat(feature_dir, method, filesep, sift_type, filesep, vocabulary, filesep);
     mkdir(vocabulary_file_path);
