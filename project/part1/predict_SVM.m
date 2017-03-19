@@ -1,6 +1,6 @@
 %read model!
 
-feature_dir = '..\Caltech4\FeatureData\';
+feature_dir = strcat('..', filesep, 'Caltech4', filesep, 'FeatureData', filesep);
 data_ext = '*.mat';
 feature_method = 'keypoint';
 sift_type = 'grayscale';
@@ -10,7 +10,7 @@ subset_size = 50;
 
 image_categories = string({'airplanes_test' 'cars_test' 'faces_test' 'motorbikes_test'});
 % image_categories = string({'airplanes_train' 'cars_train' 'faces_train' 'motorbikes_train'});
-histograms_dir = strcat(feature_dir, feature_method ,'\', sift_type, '\', 'histograms', '\');
+histograms_dir = strcat(feature_dir, feature_method ,filesep, sift_type, filesep, 'histograms', filesep);
 
 all_histograms = [];
 
