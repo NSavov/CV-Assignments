@@ -35,9 +35,9 @@ elseif strcmp(method, 'keypoint')
 
         u = cat(1, R_f', G_f', B_f');
 
-        [~, R_sift] = vl_sift(single(image(:,:,1)), 'frames', u);
-        [~, G_sift] = vl_sift(single(image(:,:,2)), 'frames', u);
-        [~, B_sift] = vl_sift(single(image(:,:,3)), 'frames', u);
+        [~, R_sift] = vl_sift(single(image(:,:,1)), 'frames', u');
+        [~, G_sift] = vl_sift(single(image(:,:,2)), 'frames', u');
+        [~, B_sift] = vl_sift(single(image(:,:,3)), 'frames', u');
 
         sift = cat(1, R_sift, G_sift, B_sift);	
     end
