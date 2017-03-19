@@ -1,4 +1,4 @@
-function [] = build_histograms(method, sift_type, subset_size)
+function [] = build_histograms(method, sift_type, image_categories, subset_size)
 
 subset_str = '';
 
@@ -8,11 +8,10 @@ end
 
 setup_paths;
 
-% image_categories = string({'airplanes_train' 'cars_train' 'faces_train' 'motorbikes_train'});
-image_categories = string({'airplanes_test' 'cars_test' 'faces_test' 'motorbikes_test'});
+
 
 sample_size = 2;
-structure = load(strcat(feature_dir, method, filesep, sift_type, filesep, 'vocabulary', filesep, 'vocabulary'));
+structure = load(strcat(feature_dir, method, filesep, sift_type, filesep, 'vocabulary', filesep, 'vocabulary_100'));
 centroids = structure.C;
 
 

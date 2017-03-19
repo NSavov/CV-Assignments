@@ -31,8 +31,8 @@ function [] = build_vocabulary(method, sift_type, subset_size)
         end
     end
     
-    [~, C] = kmeans(double(all_sift_features), 400);
-    vocabulary_file_path = strcat(feature_dir, method, filesep, sift_type, filesep, vocabulary, filesep);
+    [~, C] = kmeans(double(all_sift_features), 400,'Display','iter');
+    vocabulary_file_path = strcat(feature_dir, method, filesep, sift_type, filesep, 'vocabulary', filesep);
     mkdir(vocabulary_file_path);
     save(strcat(vocabulary_file_path, 'vocabulary', subset_str), 'C');
 end
