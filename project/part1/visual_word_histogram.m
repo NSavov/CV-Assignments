@@ -10,6 +10,8 @@ function [histogram] = visual_word_histogram(image, centroids, feature_method, s
     % histogram(i) is the proportion of times word i is present in the
     % image
     
+    warning('off', 'stats:kmeans:FailedToConverge');
+    
     n_centroids = size(centroids, 1);
     d = extract_sift(image, feature_method, sift_type, sample_size);
     % point_mapping(i) is the cluster point i maps to
@@ -25,5 +27,5 @@ function [histogram] = visual_word_histogram(image, centroids, feature_method, s
     end
     
     histogram = histcounts(point_mapping, n_centroids);
-    histogram = histogram ./ sum(histogram);
+%     histogram = histogram ./ sum(histogram);
 end

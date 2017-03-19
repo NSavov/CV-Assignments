@@ -30,7 +30,9 @@ function [] = build_feature_set(method, sift_type, sample_size, subset_size)
 
             [sift] = extract_sift(image, method, sift_type, sample_size);
 
-            save(strcat(feature_dir, method, filesep, sift_type, filesep, image_category, filesep, files(i).name, subset_str, '.mat'), 'sift');
+            feature_file_path = strcat(feature_dir, method, filesep, sift_type, filesep, 'sift', filesep, image_category, filesep);
+            mkdir(feature_file_path);
+            save(strcat(feature_file_path, files(i).name, subset_str, '.mat'), 'sift');
         end
     end
 end
