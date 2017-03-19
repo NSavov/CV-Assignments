@@ -4,7 +4,7 @@ if strcmp(sift_type, 'opponent')
     image = rgb2opponent(image);
 end
 
-if strcmp(sift_type, 'rgb')
+if strcmp(sift_type, 'norm_rgb')
     image = rgb2normedrgb(image);
 end
 
@@ -53,5 +53,5 @@ end
 
 
 
-size(sift)
+% size(sift)
 end

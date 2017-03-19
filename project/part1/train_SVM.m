@@ -4,7 +4,7 @@ feature_method = 'keypoint';
 sift_type = 'grayscale';
 category = 'airplanes_train';
 
-subset_size = 50;
+subset_size = 100;
 
 image_categories = string({'airplanes_train' 'cars_train' 'faces_train' 'motorbikes_train'});
 % image_categories = string({'airplanes_test' 'cars_test' 'faces_test' 'motorbikes_test'});
