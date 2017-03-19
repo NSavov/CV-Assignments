@@ -8,7 +8,7 @@ subset_size = 50;
 
 image_categories = string({'airplanes_train' 'cars_train' 'faces_train' 'motorbikes_train'});
 
-histograms_dir = strcat(feature_dir, feature_method ,'\', sift_type, '\histograms\');
+histograms_dir = strcat(feature_dir, feature_method ,filesep, sift_type, filesep, 'histograms', filesep);
 
 all_histograms = [];
 
