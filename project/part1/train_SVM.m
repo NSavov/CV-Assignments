@@ -24,7 +24,7 @@ labels_cat{3} = cat(1, cat(1, zeros(2*subset_size, 1), ones(subset_size, 1)), ze
 labels_cat{4} = cat(1, zeros(3*subset_size, 1), ones(subset_size, 1));
 
 for i = 1:size(image_categories, 2)
- model {i} = train(labels_cat{i}, sparse(double(all_histograms)), '-s 1');
+ model{i} = train(labels_cat{i}, sparse(double(all_histograms)), '-s 1');
 end
 
 % labels = cat(1, ones(subset_size, 1), zeros(3*subset_size, 1));
