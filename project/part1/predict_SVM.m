@@ -16,10 +16,13 @@ all_histograms = [];
 
 for category_ind = 1:size(image_categories, 2)
     image_category = char(image_categories(category_ind));
-    image_category
+    image_category;
+    strcat(histograms_dir, image_category, '.mat')
     load(strcat(histograms_dir, image_category, '.mat'), 'histograms');
     all_histograms = cat(1, all_histograms, histograms(1:subset_size,:));
 end
+
+size(unique(all_histograms,'rows'))
 
 labels_cat{1} = cat(1, ones(subset_size, 1), zeros(3*subset_size, 1));
 labels_cat{2} = cat(1, cat(1, zeros(subset_size, 1), ones(subset_size, 1)), zeros(2*subset_size, 1));
@@ -29,9 +32,17 @@ labels_cat{4} = cat(1, zeros(3*subset_size, 1), ones(subset_size, 1));
 ap = zeros(1, 4);
 decision_values = zeros(subset_size*size(image_categories, 2), size(image_categories, 2));
 for i = 1:size(image_categories, 2)
- [predicted_label, accuracy, d] = predict(labels_cat{i}, sparse(double(all_histograms)), model{i});
- decision_values(:, i) = d;
+%  [predicted_label, accuracy, d] = predict(labels_cat{i}, sparse(double(all_histograms)), model{i});
+ [predicted_label, d] = predict(model{i}, all_histograms);
+%  d
+%  decision_values(:, i) =  double(model_w{i}')*double(all_histograms')+model_b{i};
+decision_values(:, i) = d(:, 2);
+
  ap(i) = get_average_precision(labels_cat{i}, decision_values(:, i));
+ 'iter'
+ combined = cat(2, decision_values(:, i), labels_cat{i}, predicted_label);
+ combined = sortrows(combined, [1 -2]);
+%  combined = flipud(combined)
 end
 %   [predicted_label, accuracy, decision_values_2] = predict(labels_cat_2, sparse(double(all_histograms)), model{2});
 %  ap(2) = get_average_precision(labels_cat_1, decision_values_2);

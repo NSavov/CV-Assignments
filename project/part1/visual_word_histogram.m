@@ -1,4 +1,4 @@
-function [histogram] = visual_word_histogram(image, centroids, feature_method, sift_type, sample_size)
+function [histogram] = visual_word_histogram(image, centroids, feature_method, sift_type, feature_file_path)
     % calculates the normalized histogram of visual word counts of an image
     % image: image to calculate histogram on. Can be RGB, rgb, grayscaled
     % or opponent color spaced
@@ -13,19 +13,27 @@ function [histogram] = visual_word_histogram(image, centroids, feature_method, s
     warning('off', 'stats:kmeans:FailedToConverge');
     
     n_centroids = size(centroids, 1);
-    d = extract_sift(image, feature_method, sift_type, sample_size);
+    
+    load(feature_file_path, 'sift');
+    d = sift;
+    
+    
+%     d = extract_sift(image, feature_method, sift_type, sample_size);
     % point_mapping(i) is the cluster point i maps to
     d = d';
     n_d = size(d, 1);
     if n_d < n_centroids
         d =  cat(1, d,repmat(d(end, :),n_centroids-n_d,1));
     end
-    point_mapping = kmeans(double(d), n_centroids,'MaxIter',1,'Start',centroids);
     
+    point_mapping = kmeans(double(d), n_centroids,'MaxIter',1,'Start',centroids);
+
     if n_d < n_centroids
-        point_mapping = point_mapping(n_d, :);
+        point_mapping = point_mapping(1:n_d, :);
     end
     
-    histogram = histcounts(point_mapping, n_centroids);
+    histogram = histcounts(point_mapping, n_centroids, 'Normalization', 'count');
+
 %     histogram = histogram ./ sum(histogram);
+    warning('on', 'stats:kmeans:FailedToConverge');
 end
