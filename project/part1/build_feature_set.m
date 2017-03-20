@@ -1,13 +1,13 @@
-function [] = build_feature_set(method, sift_type, sample_size, subset_size)
+function [] = build_feature_set(method, sift_type, image_categories, sample_size, subset_size)
     
     subset_str = '';
 
-    if nargin == 4
+    if nargin == 5
       subset_str = strcat('_', int2str(subset_size));
     end
     
     setup_paths;
-    image_categories = string({'airplanes_train' 'cars_train' 'faces_train' 'motorbikes_train'});
+    
 
     for category_ind = 1:size(image_categories, 2)
         image_category = char(image_categories(category_ind));
@@ -16,7 +16,7 @@ function [] = build_feature_set(method, sift_type, sample_size, subset_size)
         files = dir(fullfile(image_category_dir, image_ext));
         image_category
         
-        if nargin < 4
+        if nargin < 5
           subset_size = size(files,1);
         end
         
