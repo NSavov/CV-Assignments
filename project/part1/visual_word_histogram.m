@@ -21,26 +21,31 @@ function [histogram] = visual_word_histogram(image, centroids, feature_method, s
 %     d = extract_sift(image, feature_method, sift_type, sample_size);
     % point_mapping(i) is the cluster point i maps to
     d = d';
-    n_d = size(d, 1);
-    if n_d < n_centroids
-        d =  cat(1, d,repmat(d(end, :),n_centroids-n_d,1));
-    end
+%     n_d = size(d, 1);
+%     if n_d < n_centroids
+%         d =  cat(1, d,repmat(d(end, :),n_centroids-n_d,1));
+%     end
+%     
+%     point_mapping = kmeans(double(d), n_centroids,'MaxIter',1,'Start',centroids);
     
-    point_mapping = kmeans(double(d), n_centroids,'MaxIter',1,'Start',centroids);
-
-    if n_d < n_centroids
-        point_mapping = point_mapping(1:n_d, :);
-    end
+%     if n_d < n_centroids
+%         point_mapping = point_mapping(1:n_d, :);
+%     end
 %     point_mapping
+
+point_mapping = knnsearch(double(centroids), double(d));
+
     minimum = min(point_mapping);
     maximum = max(point_mapping);
+%     'start'
+%     size(point_mapping)
+%     point_mapping==pointmapping_2;
     pad1 = zeros(1,minimum-1);
     pad2 = zeros(1,n_centroids-maximum);
     histogram = histcounts(point_mapping, maximum-minimum+1);
-%     histogram
     histogram = cat(2, pad1, histogram, pad2);
-%     histogram
-%     histogram
+%     size(histogram)
+
     
     histogram = histogram ./ max(histogram);
     warning('on', 'stats:kmeans:FailedToConverge');

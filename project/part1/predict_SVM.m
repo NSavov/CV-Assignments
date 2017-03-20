@@ -1,10 +1,6 @@
 %read model!
 
 setup_paths;
-data_ext = '*.mat';
-feature_method = 'keypoint';
-sift_type = 'grayscale';
-category = 'airplanes_train';
 
 subset_size = 50;
 

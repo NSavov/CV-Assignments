@@ -28,11 +28,13 @@ labels_cat{2} = cat(1, cat(1, zeros(subset_size, 1), ones(subset_size, 1)), zero
 labels_cat{3} = cat(1, cat(1, zeros(2*subset_size, 1), ones(subset_size, 1)), zeros(subset_size, 1));
 labels_cat{4} = cat(1, zeros(3*subset_size, 1), ones(subset_size, 1));
 
+size(unique(histograms, 'rows'))
+size(histograms)
 for i = 1:size(image_categories, 2)
 %  model{i} = train(labels_cat{i}, sparse(double(all_histograms)), '-s 1');
 %  [w, b] = vl_svmtrain(all_histograms', labels_cat{i}, 0.01,'MaxNumIterations', 1000);
 
- model{i} = fitcsvm(all_histograms, labels_cat{i},'KernelFunction','linear','ClassNames',[0,1]);
+ model{i} = fitcsvm(all_histograms, labels_cat{i},'KernelFunction','linear','ClassNames',[0, 1]);
 
 %  model_w{i} = w;
 %  model_b{i} = b;
