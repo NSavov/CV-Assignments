@@ -1,4 +1,4 @@
-function [] = build_histograms(method, sift_type, image_categories, suffix, sample_size)
+function [] = build_histograms(method, sift_type, image_categories, suffix,  subset_size)
 
 subset_str = '';
 
