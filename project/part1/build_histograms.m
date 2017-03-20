@@ -1,21 +1,15 @@
-function [] = build_histograms(method, sift_type, subset_size)
+function [] = build_histograms(method, sift_type, image_categories, suffix, sample_size, subset_size)
 
 subset_str = '';
 
-if nargin == 3
+if nargin == 6
   subset_str = strcat('_', int2str(subset_size));
 end
 
 setup_paths;
 
-% image_categories = string({'airplanes_train' 'cars_train' 'faces_train' 'motorbikes_train'});
-image_categories = string({'airplanes_test' 'cars_test' 'faces_test' 'motorbikes_test'});
-
-sample_size = 2;
-structure = load(strcat(feature_dir, method, filesep, sift_type, filesep, 'vocabulary', filesep, 'vocabulary'));
+structure = load(strcat(feature_dir, method, filesep, sift_type, filesep, 'vocabulary', filesep, 'vocabulary', suffix));
 centroids = structure.C;
-
-
 
 for category_ind = 1:size(image_categories, 2)
     histograms = [];
@@ -25,7 +19,7 @@ for category_ind = 1:size(image_categories, 2)
 
     files = dir(fullfile(image_category_dir, image_ext));
 
-    if nargin < 3
+    if nargin < 6
       subset_size = size(files,1);
     end
     
