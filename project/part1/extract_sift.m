@@ -8,7 +8,7 @@ if strcmp(sift_type, 'norm_rgb')
     image = rgb2normedrgb(image);
 end
 
-grayscale_image = single(rgb2gray(image));
+grayscale_image = im2single(rgb2gray(image));
 
 if strcmp(method, 'dense')
     if strcmp(sift_type, 'grayscale')
@@ -17,9 +17,9 @@ if strcmp(method, 'dense')
         [f,~] = vl_dsift(grayscale_image, 'step', sample_size) ;%vl_phow(grayscale_image, 'step', sample_size);
         f(3,:) = 1 ;
         f(4,:) = 0 ;
-        [~, R_sift] = vl_sift(single(image(:,:,1)), 'frames', f);
-        [~, G_sift] = vl_sift(single(image(:,:,2)), 'frames', f);
-        [~, B_sift] = vl_sift(single(image(:,:,3)), 'frames', f);
+        [~, R_sift] = vl_sift(im2single(image(:,:,1)), 'frames', f);
+        [~, G_sift] = vl_sift(im2single(image(:,:,2)), 'frames', f);
+        [~, B_sift] = vl_sift(im2single(image(:,:,3)), 'frames', f);
         
         sift = cat(1, R_sift, G_sift, B_sift);
         
@@ -31,9 +31,9 @@ elseif strcmp(method, 'keypoint')
     else
         [f,~] = vl_sift(grayscale_image) ;
         
-        [~, R_sift] = vl_sift(single(image(:,:,1)), 'frames', f);
-        [~, G_sift] = vl_sift(single(image(:,:,2)), 'frames', f);
-        [~, B_sift] = vl_sift(single(image(:,:,3)), 'frames', f);
+        [~, R_sift] = vl_sift(im2single(image(:,:,1)), 'frames', f);
+        [~, G_sift] = vl_sift(im2single(image(:,:,2)), 'frames', f);
+        [~, B_sift] = vl_sift(im2single(image(:,:,3)), 'frames', f);
         
         sift = cat(1, R_sift, G_sift, B_sift);
 %         

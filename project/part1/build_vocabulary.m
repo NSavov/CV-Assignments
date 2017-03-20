@@ -1,7 +1,7 @@
-function [] = build_vocabulary(method, sift_type, subset_size)
+function [] = build_vocabulary(method, sift_type, vocabulary_size, subset_size)
     subset_str = '';
 
-    if nargin == 3
+    if nargin == 4
       subset_str = strcat('_', int2str(subset_size));
     end
 
@@ -12,8 +12,6 @@ function [] = build_vocabulary(method, sift_type, subset_size)
     image_categories = string({'airplanes_train' 'cars_train' 'faces_train' 'motorbikes_train'});
     all_sift_features = [];
 
-    % subset_size = 200;
-
     for category_ind = 1:size(image_categories, 2)
         image_category = char(image_categories(category_ind));
         image_category
@@ -21,7 +19,7 @@ function [] = build_vocabulary(method, sift_type, subset_size)
 
         files = dir(fullfile(image_category_dir, data_ext));
 
-        if nargin < 3
+        if nargin < 4
             subset_size = size(files,1);
         end
         
@@ -31,7 +29,7 @@ function [] = build_vocabulary(method, sift_type, subset_size)
         end
     end
     
-    [~, C] = kmeans(double(all_sift_features), 400,'Display','iter');
+    [~, C] = kmeans(double(all_sift_features), vocabulary_size,'Display','iter');
     vocabulary_file_path = strcat(feature_dir, method, filesep, sift_type, filesep, 'vocabulary', filesep);
     mkdir(vocabulary_file_path);
     save(strcat(vocabulary_file_path, 'vocabulary', subset_str), 'C');
