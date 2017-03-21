@@ -1,15 +1,11 @@
 function create_html(settings, results)
     [step_size, block_size, sift_method, sift_setting, training_example_count, vocab_size, vocab_fraction, svm_training_data_positive, svm_training_data_negative, kernel] = deal(settings{:});
     [fns_c1, fns_c2, fns_c3, fns_c4, ap, map] = deal(results{:});
-    ap_c1 = ap(1);
-    ap_c2 = ap(2);
-    ap_c3 = ap(3);
-    ap_c4 = ap(4);
-    template_fn = 'template_result.html';
-    fstr = fileread(template_fn);
+    html_template = 'template_result.html';
+    fstr = fileread(html_template);
     
-    fstr = regexprep(fstr, 'stu1_name', 'Nedko Savov (11404345)');
-    fstr = regexprep(fstr, 'stu2_name', 'Fabián Guevara (11390786)');
+    fstr = strrep(fstr, 'stu1_name', 'Nedko Savov (11404345)');
+    fstr = strrep(fstr, 'stu2_name', 'Fabián Guevara (11390786)');
     
     % settings    
     if strcmp(step_size, '-1')
@@ -20,19 +16,19 @@ function create_html(settings, results)
        block_size = 'default'; 
     end
     
-    fstr = regexprep(fstr, '_siftstepsizeXXX', step_size);
-    fstr = regexprep(fstr, '_siftblocksizesXXX', block_size);
-    fstr = regexprep(fstr, '_siftblocksizesXXX', sift_method);
-    fstr = regexprep(fstr, '_vocabularysizeXXX', int2str(vocab_size));
-    fstr = regexprep(fstr, '_vocabularyfractionXXX', num2str(vocab_fraction, 3));
-    fstr = regexprep(fstr, '_svm_trainingXXXpositive', svm_training_data_positive);
-    fstr = regexprep(fstr, '_svm_trainingXXXnegative', svm_training_data_negative);
-    fstr = regexprep(fstr, '_svmkerneltypeXXX', kernel);
-    fstr = regexprep(fstr, '_map0.XXX', num2str(map, 3));
-    fstr = regexprep(fstr, '_airplanes0.XXX', num2str(ap_c1, 3));
-    fstr = regexprep(fstr, '_cars0.XXX', num2str(ap_c2, 3));
-    fstr = regexprep(fstr, '_faces0.XXX', num2str(ap_c3, 3));
-    fstr = regexprep(fstr, '_motorbikes0.XXX', num2str(ap_c4, 3));
+    fstr = strrep(fstr, '_siftstepsizeXXX', step_size);
+    fstr = strrep(fstr, '_siftblocksizesXXX', block_size);
+    fstr = strrep(fstr, '_siftmethodXXX-SIFT', sift_method);
+    fstr = strrep(fstr, '_vocabularysizeXXX', int2str(vocab_size));
+    fstr = strrep(fstr, '_vocabularyfractionXXX', num2str(vocab_fraction, 3));
+    fstr = strrep(fstr, '_svm_trainingXXXpositive', svm_training_data_positive);
+    fstr = strrep(fstr, '_svm_trainingXXXnegative', svm_training_data_negative);
+    fstr = strrep(fstr, '_svmkerneltypeXXX', kernel);
+    fstr = strrep(fstr, '_map0.XXX', num2str(map, 3));
+    fstr = strrep(fstr, '_airplanes0.XXX', num2str(ap(1), 3));
+    fstr = strrep(fstr, '_cars0.XXX', num2str(ap(2), 3));
+    fstr = strrep(fstr, '_faces0.XXX', num2str(ap(3), 3));
+    fstr = strrep(fstr, '_motorbikes0.XXX', num2str(ap(4), 3));
     
     
     images_per_category = size(fns_c1,2);
