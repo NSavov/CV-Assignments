@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Image list prediction</title>
+  <style type="text/css">
+   img {
+     width:200px;
+   }
+  </style>
+  </head>
+  <body>
+
+<h2>stu1_name, stu2_name</h2>
+<h1>Settings</h1>
+<table>
+<tr><th>SIFT step size</th><td>_siftstepsizeXXX px</td></tr>
+<tr><th>SIFT block sizes</th><td>_siftblocksizesXXX pixels</td></tr>
+<tr><th>SIFT method</th><td>_siftmethodXXX-SIFT</td></tr>
+<tr><th>Vocabulary size</th><td>_vocabularysizeXXX words</td></tr>
+<tr><th>Vocabulary fraction</th><td>_vocabularyfractionXXX</td></tr>
+<tr><th>SVM training data</th><td>_svm_trainingXXXpositive positive, _svm_trainingXXXnegative negative</td></tr>
+<tr><th>SVM kernel type</th><td>_svmkerneltypeXXX</td></tr>
+</table>
+<h1>Prediction lists (MAP: _map0.XXX)</h1>
+
+<table>
+<thead>
+<tr>
+<th>Airplanes (AP: _airplanes0.XXX)</th><th>Cars (AP: _cars0.XXX)</th><th>Faces (AP: _faces0.XXX)</th><th>Motorbikes (AP: _motorbikes0.XXX)</th>
+</tr>
+</thead>
+<tbody>
