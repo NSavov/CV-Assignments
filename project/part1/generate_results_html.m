@@ -1,9 +1,7 @@
-function [] = generate_results_html(feature_method, sift_type, ap, mAP, paths, vocabulary_size, sift_block_size, sift_step_size, svm_train_set_size, svm_kernel)
+function [] = generate_results_html(feature_method, sift_type, ap, mAP, paths, vocabulary_size,vocabulary_fraction, sift_block_size, sift_step_size, svm_train_set_size, svm_kernel)
     html_template_path = 'D:\Work\CV 1\CV-Assignments\project\Template_Result.html';
     html_template_file = fullfile(html_template_path);
     html_content = fileread(html_template_file);
-
-    globals;
     
     sample_size = sift_step_size;
 %     vocabulary_size =vocabulary_size;

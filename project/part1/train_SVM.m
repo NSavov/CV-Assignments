@@ -1,6 +1,5 @@
-function [models] = train_SVM(feature_method, sift_type, kernel, start_index, subset_size, hist_file_suffix)
+function [models] = train_SVM(feature_method, sift_type, kernel, start_index, subset_size, image_categories, hist_file_suffix)
     setup_paths;
-    image_categories = string({'airplanes_train' 'cars_train' 'faces_train' 'motorbikes_train'});
     histograms_dir = strcat(feature_dir, feature_method ,filesep, sift_type, filesep, 'histograms', filesep);
     all_histograms = [];
 

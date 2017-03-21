@@ -1,9 +1,6 @@
-function [mAP, ap, rankings, ranking_file_paths] = predict_SVM(feature_method, sift_type, models, subset_size,hist_file_suffix)
+function [mAP, ap, rankings, ranking_file_paths] = predict_SVM(feature_method, sift_type, models, subset_size, image_categories, hist_file_suffix)
     setup_paths;
     
-    image_categories = string({'airplanes_test' 'cars_test' 'faces_test' 'motorbikes_test'});
-    % image_categories = string({'airplanes_train' 'cars_train' 'faces_train' 'motorbikes_train'});
-
     histograms_dir = strcat(feature_dir, feature_method ,filesep, sift_type, filesep, 'histograms', filesep);
 
     all_histograms = [];
