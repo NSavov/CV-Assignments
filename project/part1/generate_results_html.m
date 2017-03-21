@@ -1,4 +1,4 @@
-function [] = generate_results_html(feature_method, sift_type)
+function [] = generate_results_html(feature_method, sift_type, ap, mAP, paths, vocabulary_size, sift_block_size, sift_step_size, svm_train_set_size, svm_kernel)
     html_template_path = 'D:\Work\CV 1\CV-Assignments\project\Template_Result.html';
     html_template_file = fullfile(html_template_path);
     html_content = fileread(html_template_file);
@@ -10,8 +10,9 @@ function [] = generate_results_html(feature_method, sift_type)
 %     sift_block_size =sift_block_size;
     training_data_positive = svm_train_set_size;
     training_data_negative = 3*training_data_positive;
-    vocabulary_fraction = 250;
-    kernel = 'linear';
+    kernel = svm_kernel;
+    stu1_name = 'Nedko Savov';
+    stu2_name = 'Fabian Guevara';
 
     html_content = strrep(html_content, 'sift_step_size', string(sample_size));
     html_content = strrep(html_content, 'sift_block_size', string(sift_block_size));
@@ -22,6 +23,8 @@ function [] = generate_results_html(feature_method, sift_type)
     html_content = strrep(html_content, 'training_data_negative', string(training_data_negative));
     html_content = strrep(html_content, 'map_result', string(mAP));
     html_content = strrep(html_content, 'kernel_type', kernel);
+    html_content = strrep(html_content, 'stu1_name', stu1_name);
+    html_content = strrep(html_content, 'stu2_name', stu2_name);
 
     html_content = strrep(html_content, 'airplanes_ap', string(ap(1)));
     html_content = strrep(html_content, 'cars_ap', string(ap(2)));
@@ -30,14 +33,12 @@ function [] = generate_results_html(feature_method, sift_type)
 
     html_body = '';
 
-    paths = ranking_fileName{1};
     row_size = size(paths{1},1);
 
     for row = 1:row_size
         html_body = strcat(html_body, '<tr>');
 
         cat_paths = paths{1};
-        cat_paths(row)
         html_body = strcat(html_body, '<td>');
         html_body = strcat(html_body, '<img src="');
         html_body = strcat(html_body, char(cat_paths(row)));

@@ -1,9 +1,13 @@
-function [] = build_histograms(method, sift_type, image_categories, suffix,  file_suffix, subset_size)
+function [] = build_histograms(method, sift_type, image_categories, suffix,  vocabulary_size, subset_size)
 
 subset_str = '';
 
 if nargin < 5
     file_suffix = '';
+end
+
+if nargin >= 5
+    file_suffix = strcat('_', num2str(vocabulary_size));
 end
 
 if nargin == 6

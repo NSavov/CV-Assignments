@@ -13,7 +13,6 @@ function [mAP, ap, rankings, ranking_file_paths] = predict_SVM(feature_method, s
     for category_ind = 1:size(image_categories, 2)
         image_category = char(image_categories(category_ind));
         image_category_dir = strcat(image_dir, image_category, filesep);
-        strcat(histograms_dir, image_category,hist_file_suffix, '.mat')
         load(strcat(histograms_dir, image_category,hist_file_suffix, '.mat'), 'histograms','hist_image_map');
         all_histograms = cat(1, all_histograms, histograms(1:subset_size,:));
         
