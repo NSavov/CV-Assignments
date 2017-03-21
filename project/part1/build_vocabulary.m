@@ -1,10 +1,14 @@
-function [] = build_vocabulary(method, sift_type, vocabulary_size, subset_size)
+function [] = build_vocabulary(method, sift_type, vocabulary_size, subset_size, suffix)
     subset_str = '';
 
-    if nargin == 4
+    if nargin >= 4
       subset_str = strcat('_', int2str(subset_size));
     end
 
+    if nargin<5
+        suffix = '';
+    end
+    
     setup_paths;
     
     data_ext = '*.mat';
@@ -32,5 +36,5 @@ function [] = build_vocabulary(method, sift_type, vocabulary_size, subset_size)
     [~, C] = kmeans(double(all_sift_features), vocabulary_size,'Display','iter');
     vocabulary_file_path = strcat(feature_dir, method, filesep, sift_type, filesep, 'vocabulary', filesep);
     mkdir(vocabulary_file_path);
-    save(strcat(vocabulary_file_path, 'vocabulary', subset_str), 'C');
+    save(strcat(vocabulary_file_path, 'vocabulary', subset_str, suffix), 'C');
 end

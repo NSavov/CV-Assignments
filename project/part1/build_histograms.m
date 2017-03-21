@@ -29,7 +29,9 @@ for category_ind = 1:size(image_categories, 2)
             continue
         end
         feature_file_path = strcat(feature_dir, method, filesep, sift_type, filesep, 'sift', filesep, image_category, filesep, files(i).name, '.mat');
-        histogram = visual_word_histogram(image, centroids, method, sift_type, feature_file_path);
+        load(feature_file_path, 'sift');
+        
+        histogram = visual_word_histogram(image, centroids, sift);
         histograms = cat(1, histograms, histogram);
         hist_image_map = cat(1, hist_image_map, str2num(files(i).name(1,4:6)));
         
