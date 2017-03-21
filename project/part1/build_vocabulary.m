@@ -16,7 +16,6 @@ function [] = build_vocabulary(method, sift_type, vocabulary_size, subset_size)
         image_category = char(image_categories(category_ind));
         image_category
         image_category_dir = strcat(feature_dir, method, filesep, sift_type, filesep, 'sift', filesep, image_category, filesep);
-
         files = dir(fullfile(image_category_dir, data_ext));
 
         if nargin < 4
@@ -29,7 +28,10 @@ function [] = build_vocabulary(method, sift_type, vocabulary_size, subset_size)
         end
     end
     
-    [~, C] = kmeans(double(all_sift_features), vocabulary_size,'Display','iter');
+    [~, C] = kmeans_fast(double(all_sift_features)', vocabulary_size);
+    C = C';
+    'built C'
+    size(C)
     vocabulary_file_path = strcat(feature_dir, method, filesep, sift_type, filesep, 'vocabulary', filesep);
     mkdir(vocabulary_file_path);
     save(strcat(vocabulary_file_path, 'vocabulary', subset_str), 'C');
