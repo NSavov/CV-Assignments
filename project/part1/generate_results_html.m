@@ -69,7 +69,7 @@ function [] = generate_results_html(feature_method, sift_type, ap, mAP, paths, v
     html_body = strrep(html_body, '\', '\\');
     html_content = strrep(html_content, 'body_images', html_body);
 
-    fid=fopen(strcat('results_', feature_method, '-', sift_type, '.html'),'w');
+    fid=fopen(strcat('results_', feature_method, '-', sift_type, '-', num2str(vocabulary_fraction), '.html'),'w');
     fprintf(fid, html_content);
     fclose(fid);
 end

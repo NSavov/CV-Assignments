@@ -1,25 +1,42 @@
 globals;
+% sift_method = 'dense';
+% sift_type = 'grayscale';
+% build_vocabulary(sift_method, sift_type, 400, vocabulary_fraction, vocabulary_size);
+
 sift_method = 'dense';
-sift_type = 'grayscale';
-
-
-sift_type = 'grayscale';
-build_histograms(sift_method, sift_type,image_categories_train, vocabulary_fraction, vocabulary_size)
-build_histograms(sift_method, sift_type,image_categories_test, vocabulary_fraction, vocabulary_size)
-
 sift_type = 'RGB';
-build_histograms(sift_method, sift_type,image_categories_train, vocabulary_fraction, vocabulary_size)
-build_histograms(sift_method, sift_type,image_categories_test, vocabulary_fraction, vocabulary_size)
+build_vocabulary(sift_method, sift_type, 400, vocabulary_fraction, vocabulary_size);
 
+% sift_method = 'dense';
+% sift_type = 'opponent';
+% build_vocabulary(sift_method, sift_type, 400, vocabulary_fraction, vocabulary_size);
+
+sift_method = 'dense';
 sift_type = 'norm_rgb';
-build_histograms(sift_method, sift_type,image_categories_train, vocabulary_fraction, vocabulary_size)
-build_histograms(sift_method, sift_type,image_categories_test, vocabulary_fraction, vocabulary_size)
+build_vocabulary(sift_method, sift_type, 400, vocabulary_fraction, vocabulary_size);
 
-sift_type = 'opponent';
-build_histograms(sift_method, sift_type,image_categories_train, vocabulary_fraction, vocabulary_size)
-build_histograms(sift_method, sift_type,image_categories_test, vocabulary_fraction, vocabulary_size)
 
+
+
+% sift_type = 'grayscale';
+% build_histograms(sift_method, sift_type,image_categories_train, vocabulary_fraction, vocabulary_size)
+% build_histograms(sift_method, sift_type,image_categories_test, vocabulary_fraction, vocabulary_size)
 % 
+% sift_type = 'RGB';
+% build_histograms(sift_method, sift_type,image_categories_train, vocabulary_fraction, vocabulary_size)
+% build_histograms(sift_method, sift_type,image_categories_test, vocabulary_fraction, vocabulary_size)
+% 
+% sift_type = 'norm_rgb';
+% build_histograms(sift_method, sift_type,image_categories_train, vocabulary_fraction, vocabulary_size)
+% build_histograms(sift_method, sift_type,image_categories_test, vocabulary_fraction, vocabulary_size)
+% 
+% sift_type = 'opponent';
+% build_histograms(sift_method, sift_type,image_categories_train, vocabulary_fraction, vocabulary_size)
+% build_histograms(sift_method, sift_type,image_categories_test, vocabulary_fraction, vocabulary_size)
+% 
+% % 
+
+
 % 
 % sift_method = 'keypoint';
 % sift_type = 'RGB';
