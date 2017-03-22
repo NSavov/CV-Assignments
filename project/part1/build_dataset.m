@@ -3,17 +3,17 @@ globals;
 % sift_type = 'grayscale';
 % build_vocabulary(sift_method, sift_type, 400, vocabulary_fraction, vocabulary_size);
 
-sift_method = 'dense';
-sift_type = 'RGB';
-build_vocabulary(sift_method, sift_type, 400, vocabulary_fraction, vocabulary_size);
-
 % sift_method = 'dense';
-% sift_type = 'opponent';
+% sift_type = 'RGB';
 % build_vocabulary(sift_method, sift_type, 400, vocabulary_fraction, vocabulary_size);
 
 sift_method = 'dense';
+sift_type = 'opponent';
+build_vocabulary(sift_method, sift_type, vocabulary_size, vocabulary_fraction);
+
+sift_method = 'dense';
 sift_type = 'norm_rgb';
-build_vocabulary(sift_method, sift_type, 400, vocabulary_fraction, vocabulary_size);
+build_vocabulary(sift_method, sift_type, vocabulary_size, vocabulary_fraction);
 
 
 
