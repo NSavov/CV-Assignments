@@ -99,7 +99,24 @@ for class_i=1:size(classes,2)
             if size(image, 3)<3
                 continue
             end
-            data(:, :, :, end+1) = imresize(image, [32 32, 3]);
+            
+            
+            
+            image = imresize(image, [32 32]);
+%             sizes = [size(image,1), size(image, 2)];
+%             [min_v, ind_max] = max(sizes);
+%             [max_v, ind_min] = min(sizes);
+%             
+%             if ind_max == 1
+%                 rectangle = []
+%                 image = imcrop(image, [])
+%             end
+% %             
+%             image = imcrop(image);
+%             size(image)
+            
+%             imshow(image)
+            data(:, :, :, end+1) = image;%imresize(image, [32 32, 3]);
 
             labels(1,end+1) = class_i;
             sets(1,end+1) = split_i;

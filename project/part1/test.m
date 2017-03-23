@@ -1,23 +1,35 @@
-n_groups = 2;
-% labels_line_1 = {'keypoint','keypoint','keypoint', 'keypoint','dense','dense','dense', 'dense'};
-labels_line_1 = {'grayscale','RGB','rgb', 'opponent'};
 
-y = squeeze(maps(1,:));
-size(y)
-b = bar( y', 'FaceColor', 'y');
+plot(50:10:(10*size(all_iters,2) + 40), all_iters)
 
-% set(b(1),'FaceColor',[1,0,0])
-% set(b(2),'FaceColor',[0,1,0])
-% set(b(3),'FaceColor',[0,0,1])
-ylabel('mAP');
-set(gca, 'FontSize',14 )
-set(gca,'xticklabel',labels_line_1)
+% for feature_method_i=1:size(feature_methods,2)
+%     for sift_type_i=1:size(sift_types,2)
+%     plot(50:10:(10*size(all_iters,1)/4 + 30), all_iters(1:(end/4-1), feature_method_i, sift_type_i))
+%     hold on
+%     end
+% end
+% 
+% legend('k-grayscale','k-RGB','k-rgb','k-opponent', 'd-grayscale','d-RGB','d-rgb','d-opponent','Location','southeast')
 
-y = reshape(y', 1, 4);
-text(get(gca,'Xtick'),y'-0.1,num2str(y','%0.4f'),...
-'HorizontalAlignment','center',...
-'VerticalAlignment','bottom',...
-'FontSize',14 )
+% n_groups = 2;
+% % labels_line_1 = {'keypoint','keypoint','keypoint', 'keypoint','dense','dense','dense', 'dense'};
+% labels_line_1 = {'grayscale','RGB','rgb', 'opponent'};
+% 
+% y = squeeze(maps(1,:));
+% size(y)
+% b = bar( y', 'FaceColor', 'y');
+% 
+% % set(b(1),'FaceColor',[1,0,0])
+% % set(b(2),'FaceColor',[0,1,0])
+% % set(b(3),'FaceColor',[0,0,1])
+% ylabel('mAP');
+% set(gca, 'FontSize',14 )
+% set(gca,'xticklabel',labels_line_1)
+% 
+% y = reshape(y', 1, 4);
+% text(get(gca,'Xtick'),y'-0.1,num2str(y','%0.4f'),...
+% 'HorizontalAlignment','center',...
+% 'VerticalAlignment','bottom',...
+% 'FontSize',14 )
 
 
 

@@ -14,22 +14,19 @@ sift_type = 'RGB';
 % 
 % 
 sift_type = 'grayscale';
+vocabulary_size=800;
 build_histograms(sift_method, sift_type,image_categories_train,vocabulary_fraction,  vocabulary_size)
 build_histograms(sift_method, sift_type,image_categories_test,vocabulary_fraction, vocabulary_size)
 
-sift_type = 'RGB';
+sift_type = 'grayscale';
+vocabulary_size=1600;
 build_histograms(sift_method, sift_type,image_categories_train,vocabulary_fraction,  vocabulary_size)
 build_histograms(sift_method, sift_type,image_categories_test,vocabulary_fraction, vocabulary_size)
 
-sift_type = 'opponent';
+sift_type = 'grayscale';
+vocabulary_size=2000;
 build_histograms(sift_method, sift_type,image_categories_train,vocabulary_fraction,  vocabulary_size)
 build_histograms(sift_method, sift_type,image_categories_test,vocabulary_fraction, vocabulary_size)
-
-sift_type = 'norm_rgb';
-build_histograms(sift_method, sift_type,image_categories_train,vocabulary_fraction,  vocabulary_size)
-build_histograms(sift_method, sift_type,image_categories_test,vocabulary_fraction, vocabulary_size)
-
-
 % sift_method='keypoint';
 % sift_type = 'RGB';
 % build_vocabulary(sift_method, sift_type, vocabulary_size, vocabulary_fraction)
