@@ -8,13 +8,6 @@ if vocabulary_size ~= 400
     suffix = strcat(suffix,'_',num2str(vocabulary_size));
 end
 
-if nargin < 5
-    file_suffix = '';
-end
-
-if nargin >= 5
-    file_suffix = strcat('_', num2str(vocabulary_size));
-end
 
 if nargin == 6
   subset_str = strcat('_', int2str(subset_size));
@@ -51,6 +44,6 @@ for category_ind = 1:size(image_categories, 2)
     end
     histograms_file_path = strcat(feature_dir, method, filesep, sift_type, filesep, 'histograms', filesep);
     mkdir(histograms_file_path);
-    save(strcat(histograms_file_path, image_category, subset_str, file_suffix, '.mat'), 'histograms','hist_image_map');
+    save(strcat(histograms_file_path, image_category, subset_str, suffix, '.mat'), 'histograms','hist_image_map');
 end
 

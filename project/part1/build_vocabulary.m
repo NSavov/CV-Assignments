@@ -5,6 +5,11 @@ function [] = build_vocabulary(method, sift_type, vocabulary_size, subset_size)
       subset_str = strcat('_', int2str(subset_size));
     end
 
+    suffix = '';
+    
+    if vocabulary_size ~= 400
+        suffix = strcat('_',num2str(vocabulary_size));
+    end
     
     setup_paths;
     
@@ -35,5 +40,5 @@ function [] = build_vocabulary(method, sift_type, vocabulary_size, subset_size)
     size(C)
     vocabulary_file_path = strcat(feature_dir, method, filesep, sift_type, filesep, 'vocabulary', filesep);
     mkdir(vocabulary_file_path);
-    save(strcat(vocabulary_file_path, 'vocabulary', subset_str, strcat('_',num2str(vocabulary_size))), 'C');
+    save(strcat(vocabulary_file_path, 'vocabulary', subset_str, suffix), 'C');
 end

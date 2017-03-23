@@ -1,8 +1,7 @@
 function [net, info, expdir] = finetune_cnn(varargin)
 
 %% Define options
-run(fullfile(fileparts(mfilename('fullpath')), ...
-  '..', '..', '..', 'matlab', 'vl_setupnn.m')) ;
+run(fullfile(fileparts(mfilename('fullpath')), 'matconvnet-1.0-beta23', 'matlab', 'vl_setupnn.m')) ;
 
 opts.modelType = 'lenet' ;
 [opts, varargin] = vl_argparse(opts, varargin) ;
@@ -84,7 +83,32 @@ splits = {'train', 'test'};
 
 %% TODO: Implement your loop here, to create the data structure described in the assignment
 
+images_dir = '..\Caltech4\ImageData\';
 
+data = zeros(32, 32, 3, 0);
+labels = zeros(1, 0);
+sets = zeros(1,0);
+
+for class_i=1:size(classes,2)
+    for split_i=1:size(splits,2)
+        image_category_dir = strcat(images_dir, classes{class_i}, '_', splits{split_i}, filesep);
+        files = dir(fullfile(image_category_dir, '*.jpg'));
+
+        for file_i = 1:size(files,1)
+            image = imread(fullfile(image_category_dir, files(file_i).name));
+            if size(image, 3)<3
+                continue
+            end
+            data(:, :, :, end+1) = imresize(image, [32 32, 3]);
+
+            labels(1,end+1) = class_i;
+            sets(1,end+1) = split_i;
+        end
+        
+        
+        
+    end
+end
 %%
 % subtract mean
 dataMean = mean(data(:, :, :, sets == 1), 4);
