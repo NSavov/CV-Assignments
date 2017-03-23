@@ -23,15 +23,6 @@ for feature_method_i=1:size(feature_methods,2)
     end
 end
 
-y = maps;
-y
-b = bar( y, 'BarWidth', 1);
-set(b(1),'FaceColor',[1,0,0])
-set(b(2),'FaceColor',[0,1,0])
-set(b(3),'FaceColor',[0,0,1])
-ylabel('mAP');
-set(gca,'xtick',[0.73 0.9 1.1 1.27 1.73 1.9 2.1 2.25])
-set(gca,'xticklabel',{'keypoint grayscale','keypoint RGB','keypoint rgb', 'keypoint opponent','dense grayscale','dense RGB','dense rgb', 'dense opponent'})
 
 
 % celldisp(results)
