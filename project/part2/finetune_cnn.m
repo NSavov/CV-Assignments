@@ -19,7 +19,7 @@ opts.train = struct() ;
 opts = vl_argparse(opts, varargin) ;
 if ~isfield(opts.train, 'gpus'), opts.train.gpus = []; end;
 
-opts.train.gpus = [1];
+% opts.train.gpus = [1];
 
 
 
@@ -29,14 +29,16 @@ net = update_model();
 
 %% TODO: Implement getCaltechIMDB function below
 
+
+
 if exist(opts.imdbPath, 'file')
   imdb = load(opts.imdbPath) ;
 else
+ 
   imdb = getCaltechIMDB() ;
   mkdir(opts.expDir) ;
   save(opts.imdbPath, '-struct', 'imdb') ;
 end
-
 %%
 net.meta.classes.name = imdb.meta.classes(:)' ;
 
@@ -84,10 +86,11 @@ splits = {'train', 'test'};
 %% TODO: Implement your loop here, to create the data structure described in the assignment
 
 images_dir = '..\Caltech4\ImageData\';
+echo on
 
-data = zeros(32, 32, 3, 0);
-labels = zeros(1, 0);
-sets = zeros(1,0);
+data = single(zeros(32, 32, 3, 0));
+labels = single([]);
+sets = single([]);
 
 for class_i=1:size(classes,2)
     for split_i=1:size(splits,2)
@@ -99,39 +102,25 @@ for class_i=1:size(classes,2)
             if size(image, 3)<3
                 continue
             end
-            
-            
-            
             image = imresize(image, [32 32]);
-%             sizes = [size(image,1), size(image, 2)];
-%             [min_v, ind_max] = max(sizes);
-%             [max_v, ind_min] = min(sizes);
-%             
-%             if ind_max == 1
-%                 rectangle = []
-%                 image = imcrop(image, [])
-%             end
-% %             
-%             image = imcrop(image);
-%             size(image)
-            
-%             imshow(image)
-            data(:, :, :, end+1) = image;%imresize(image, [32 32, 3]);
+            data(:, :, :, end+1) = single(image);
 
-            labels(1,end+1) = class_i;
-            sets(1,end+1) = split_i;
+            labels(end+1) = class_i;
+            sets(end+1) = split_i;
         end
         
-        
-        
     end
+    
 end
+data = single(data);
+labels = single(labels);
+sets = single(sets);
 %%
 % subtract mean
 dataMean = mean(data(:, :, :, sets == 1), 4);
 data = bsxfun(@minus, data, dataMean);
 
-imdb.images.data = data ;
+imdb.images.data = single(data );
 imdb.images.labels = single(labels) ;
 imdb.images.set = sets;
 imdb.meta.sets = {'train', 'val'} ;
