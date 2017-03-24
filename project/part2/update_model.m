@@ -4,9 +4,12 @@ opts = vl_argparse(opts, varargin) ;
 
 
 %% TODO: PLAY WITH THESE PARAMETERTS TO GET A BETTER ACCURACY
+% 
+% lr_prev_layers = [.2, 2];
+% lr_new_layers  = [1, 4]; 
 
-lr_prev_layers = [.2, 2];
-lr_new_layers  = [1, 4]; 
+ lr_prev_layers = [.01, .02];
+ lr_new_layers  = [.05, 1.0];
 
 lr = lr_prev_layers ;
 
@@ -76,7 +79,7 @@ net.layers{end+1} = struct('type', 'relu') ;
 % NEW_INPUT_SIZE  = X
 % NEW_OUTPUT_SIZE = Y
 
-NEW_INPUT_SIZE  = 64;
+NEW_INPUT_SIZE  = 32;
 NEW_OUTPUT_SIZE = 4;
 
 net.layers{end+1} = struct('type', 'conv', ...

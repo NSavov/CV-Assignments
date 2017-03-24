@@ -1,12 +1,12 @@
 globals;
-feature_methods = {'keypoint'};%, 'dense'};
+feature_methods = {'keypoint', 'dense'};
 sift_types = {'grayscale', 'RGB', 'norm_rgb', 'opponent'};
 
 start = vocabulary_fraction+1;
 histogram_file_suffix = strcat('_', num2str(vocabulary_fraction));
 
 if vocabulary_size ~= 400
-    histogram_file_suffix = strcat('_', num2str(vocabulary_size));
+    histogram_file_suffix = strcat(histogram_file_suffix, '_', num2str(vocabulary_size));
 end
 results = {};
 
