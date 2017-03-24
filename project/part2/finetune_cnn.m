@@ -85,7 +85,7 @@ splits = {'train', 'test'};
 
 %% TODO: Implement your loop here, to create the data structure described in the assignment
 
-images_dir = '..\Caltech4\ImageData\';
+images_dir = strcat('..', filesep, 'Caltech4', filesep, 'ImageData', filesep);
 echo on
 
 data = single(zeros(32, 32, 3, 0));
