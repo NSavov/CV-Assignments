@@ -1,4 +1,6 @@
 function [] = generate_results_html(feature_method, sift_type, ap, mAP, paths, vocabulary_size,vocabulary_fraction, sift_block_size, sift_step_size, svm_train_set_size, svm_kernel)
+%generate an HTML files for the passed parameters
+
     html_template_path = 'D:\Work\CV 1\CV-Assignments\project\Template_Result.html';
     html_template_file = fullfile(html_template_path);
     html_content = fileread(html_template_file);
